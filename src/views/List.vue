@@ -58,10 +58,10 @@
           <div class="card card-primary card-outline card-tabs">
             <el-tabs type="border-card">
 
-              <el-tab-pane :label="item.name.en" v-for="item in category" :key='item.id'>
+              <el-tab-pane :label="item.name" v-for="item in category" :key='item.id'>
                 <table class="table">
                     <tbody>
-                      <tr v-for="goods in item.goods" :key="'goods' + goods.id">
+                      <tr v-for="goods in item.products" :key="'goods' + goods.id">
                         <td>{{ goods.name }}</td>
                         <td>
                           <button class="btn btn-info" @click.stop="addUserGoods(goods, 'happyhour')">
@@ -182,7 +182,9 @@ export default {
     if (this.billsList.length <= 0) {
       this.setBills()
     }
-    this.setFoodCategory()
+    if (this.category.length <= 0) {
+      this.setFoodCategory()
+    }
   },
 
   methods: {
@@ -202,7 +204,8 @@ export default {
         userIdx: this.userIdx,
         item: item,
         bill_id: bills.id,
-        type: item.type
+        type: item.type,
+        price: item.price
       })
     },
 
@@ -211,7 +214,7 @@ export default {
     },
 
     addUserGoods(item, key) {
-      if (this.userIdx == "") return;
+      if (this.userIdx === "") return;
       const bills = this.billsList[this.userIdx]
       this.addBillsGoods({
         userIdx: this.userIdx,

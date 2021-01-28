@@ -59,6 +59,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { remove as CookieRemove } from 'js-cookie';
 export default {
   data: () => ({
     fullscreen: false
@@ -81,6 +82,11 @@ export default {
     },
 
     goLogout () {
+      CookieRemove("POS_USERPHONE")
+      CookieRemove("POS_USERID")
+      CookieRemove("POS_LANGUAGE")
+      CookieRemove("POS_USERNAME")
+      CookieRemove("POS_TOKEN")
       this.$router.push("/login")
     },
 
