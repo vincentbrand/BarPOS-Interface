@@ -22,7 +22,7 @@ import AppNavbar from '@/components/App/navbar';
 import AppFooter from '@/components/App/footer';
 import AppSidebar from '@/components/App/sidebar';
 import BillsModel from '@/components/Home/BillsNameModel';
-
+import { remove as CookieRemove } from 'js-cookie';
 import Api from '@/Http/Language';
 export default {
   components: {
@@ -52,6 +52,11 @@ export default {
    
     init() {
       this.timmer = setTimeout(() => {
+        CookieRemove("POS_USERPHONE")
+        CookieRemove("POS_USERID")
+        CookieRemove("POS_LANGUAGE")
+        CookieRemove("POS_USERNAME")
+        CookieRemove("POS_TOKEN")
         this.$router.push({
           path: "/login",
         });
