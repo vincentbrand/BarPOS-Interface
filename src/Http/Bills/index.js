@@ -41,4 +41,12 @@ export default {
         });
         return response.data
     },
+
+    async closeBills (id) {
+        const response = await ApiService.request({
+            method: "GET",
+            url: `/bill/close/${id}`
+        });
+        return response.data
+    },
 }

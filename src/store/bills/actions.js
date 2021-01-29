@@ -88,3 +88,9 @@ export function filterSystemUser ({ getters,commit }, name) {
   })
   commit("SET_SYSTEM_USER", filterUser)
 }
+
+// 关闭订单
+export async function userCloseBills (_, id) {
+  const result = await Api.closeBills(id)
+  return result
+}
