@@ -6,12 +6,12 @@
         <div class="col-sm-6">
           <h1>Products</h1>
         </div>
-        <div class="col-sm-6">
+        <!-- <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
             <li class="breadcrumb-item active">Products</li>
           </ol>
-        </div>
+        </div> -->
       </div>
     </div><!-- /.container-fluid -->
   </section>
@@ -43,10 +43,18 @@
               </thead>
               <tbody>
               <!-- one row -->
-                <tr v-for="item in 5" :key="item">
-                  <td><a>Vodka</a></td>
-                  <td><a>alcohol</a></td>
-                  <td><a>50, 40 ,30</a></td>
+                <tr v-for="item in products" :key="item.id">
+                  <td>
+                    {{item.name}}
+                  </td>
+                  <td>
+                    {{item.category.name}}
+                  </td>
+                  <td>
+                    {{item.price}},
+                    {{item.happyhour}},
+                    {{item.discount}}
+                  </td>
                   <td class="project_progress">
                     <div class="progress progress-sm">
                       <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
@@ -85,12 +93,17 @@
 </template>
 
 <script>
+import Api from '@/Http/Products';
 export default {
     data: () => ({
-
+      products: []
     }),
 
-    mounted () {
+    created () {
+      Api.getProducts().then((res) => {
+        this.products = res.data
+        console.log(res.data)
+      })
     }
 }
 </script>
@@ -104,6 +117,7 @@ export default {
 #d1be9c
 #aa998f
 */
+/*
 a {
     color: #7d4f50;
 }
@@ -125,4 +139,5 @@ a {
     background-color: #7d4f50;
     border-color: #7d4f50;
 }
+*/
 </style>

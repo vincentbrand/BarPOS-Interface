@@ -48,7 +48,13 @@ export function addBillsGoods ({ commit }, params) {
 // 获取所有的商品及分类
 export function setFoodCategory ({ commit }) {
   Api.getCategories().then(res => {
-    commit("SET_FOOD_CATEGORY", res.data)
+    let result = res.data
+    result.forEach((cate) => {
+      cate.products.forEach((pro) => {
+        pro.quantity = 1
+      })
+    })
+    commit("SET_FOOD_CATEGORY", result)
   })
 }
 

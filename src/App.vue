@@ -1,6 +1,11 @@
 <template>
 <div id="app" @mousemove="moveEvent" @click="moveEvent">
-  <div v-if="$route.path !== '/login'" class="wrapper">
+
+  <div v-if="routerPath.includes($route.path)" class="wrapper">
+    <router-view/>
+  </div>
+
+  <div v-else class="wrapper">
     <AppNavbar />
     <AppSidebar />
     
@@ -10,10 +15,6 @@
     </div>
     
     <AppFooter />
-  </div>
-
-  <div v-else class="wrapper">
-    <router-view/>
   </div>
 </div>
 </template>
@@ -34,7 +35,9 @@ export default {
 
   data: () => ({
     timmer: null,
-    redirectTime: 100, // (:s)秒
+    isShowSidebar: false,
+    redirectTime: 150000, // (:s)秒
+    routerPath: ["/login", "/auth/login"]
   }),
 
   created () {
@@ -43,7 +46,7 @@ export default {
 
   methods: {
     moveEvent() {
-      let path = ["/login"];
+      let path = ["/login", "/auth/login"];
       if (!path.includes(this.$route.path)) {
         clearTimeout(this.timmer);
         this.init();
@@ -79,5 +82,18 @@ export default {
 </script>
 
 <style lang="less">
+.el-loading-spinner .path{
+  stroke-width: 6 !important;
+  stroke: #343a40 !important;
+}
 
+.el-loading-spinner .el-loading-text{
+  color: #343a40 !important;
+  font-weight: bold;
+}
+
+.el-loading-mask.is-fullscreen .el-loading-spinner .circular{
+  width: 42px !important;
+  height: 42px !important;
+}
 </style>

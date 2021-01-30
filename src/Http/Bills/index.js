@@ -17,10 +17,11 @@ export default {
         return response.data
     },
 
-    async getProducts () {
+    async createBills (data) {
         const response = await ApiService.request({
-            method: "GET",
-            url: '/products'
+            method: "POST",
+            url: '/bill/create',
+            data
         });
         return response.data
     },

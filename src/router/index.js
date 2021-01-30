@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/bills',
     name: 'List',
     component: resolve => require(['@/views/List'], resolve)
   },
@@ -26,6 +26,11 @@ const routes = [
     component: resolve => require(['@/views/Login'], resolve)
   },
   {
+    path: '/auth/login',
+    name: 'AuthLogin',
+    component: resolve => require(['@/views/AuthLogin'], resolve)
+  },
+  {
     path: '/employees',
     name: 'Employees',
     component: resolve => require(['@/views/Employees'], resolve)
@@ -39,6 +44,11 @@ const routes = [
     path: '/setting',
     name: 'Setting',
     component: resolve => require(['@/views/Setting'], resolve)
+  },
+  {
+    path: '/venue',
+    name: 'Venue',
+    component: resolve => require(['@/views/Venue'], resolve)
   }
 ]
 
@@ -48,7 +58,7 @@ const router = new VueRouter({
 })
 router.beforeEach((to, _, next) => {
   // console.log(from)
-  const nextRouter = [ '/login' ]
+  const nextRouter = [ '/login', '/auth/login' ]
   if ( !nextRouter.includes(to.path) && !CookieGet("POS_TOKEN") )
     next({ name: 'Login' })
   else

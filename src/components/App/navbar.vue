@@ -3,6 +3,10 @@
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
+      <li class="nav-item" v-if="fullscreen">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+
       <li class="nav-item">
         <span class="nav-link" @click="handleFullScreen">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -33,6 +37,24 @@
       </li>
     </ul>
 
+    <ul class="navbar-nav ml-auto" style="width: 35%">
+      <li class="navbar-search-block nav-item w-100">
+        <form class="form-inline w-100">
+          <div class="input-group input-group-sm w-100">
+            <input class="form-control form-control-navbar" type="search" placeholder="Search">
+            <div class="input-group-append">
+              <button class="btn btn-navbar" type="button">
+                <i class="fas fa-search"></i>
+              </button>
+              <button class="btn btn-navbar" type="button">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </li>
+    </ul>
+
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       
@@ -59,7 +81,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import { remove as CookieRemove } from 'js-cookie';
+import { remove as CookieRemove, get as CookieGet } from 'js-cookie';
 export default {
   data: () => ({
     fullscreen: false
@@ -72,7 +94,7 @@ export default {
   },
 
   created () {
-    if (this.ns.length>0) return;
+    if (this.ns.length === 0 && CookieGet("POS_TOKEN"))
     this.setUserNotifications()
   },
 
@@ -91,11 +113,11 @@ export default {
     },
 
     toPage () {
-      const r = this.$route.path == '/'?'/card':'/'
+      const r = this.$route.path == '/bills'?'/card':'/bills'
       this.$router.push(r)
     },
 
-    handleFullScreen (){
+    handleFullScreen () {
       let element = document.documentElement;
       if (this.fullscreen) {
         if (document.exitFullscreen) {
