@@ -4,7 +4,7 @@
 
   <div class="container-fluid">
     <div class="row">
-
+      <!-- Sytem Settings -->
       <div class="col-md-3">
         <div class="card card-primary">
           <div class="card-header">
@@ -13,25 +13,28 @@
           <div class="card-body">
 
             <div class="form-group row">
-              <label class="col-8 col-form-label">Venue Setting</label>
-              <div class="col-4">
-                <select class="form-control" disabled="">
-                  <option selected="">The Hai</option>
-                  <option>Real Shanghai</option>
-                </select>
+              <label class="col-7 col-form-label">Venue Setting</label>
+              <div class="col-5">
+                <el-select size="small" v-model="VenueSetting">
+                  <el-option
+                  v-for="item in VenueSettingOptions"
+                  :key="item.label"
+                  :label="item.label"
+                  :value="item.value" />
+                </el-select>
               </div>
             </div>
 
             <div class="form-group row">
-              <label class="col-8 col-form-label">Interface Theme</label>
-              <div class="col-4">
-                <select class="form-control">
-                  <option selected="">Default</option>
-                  <option>Desert</option>
-                  <option>Forest</option>
-                  <option>Spaceship</option>
-                  <option>Vulcano</option>
-                </select>
+              <label class="col-7 col-form-label">Interface Theme</label>
+              <div class="col-5">
+                <el-select size="small" v-model="InterfaceTheme">
+                  <el-option
+                  v-for="item in InterfaceThemeOptions"
+                  :key="item.label"
+                  :label="item.label"
+                  :value="item.value" />
+                </el-select>
               </div>
             </div>
 
@@ -50,19 +53,25 @@
               </div>
               <div class="row">
                 <div class="col-6">
-                  <div class="input-group date" id="timepicker" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#timepicker">
-                    <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="far fa-clock"></i></div>
-                    </div>
+                  <div class="input-group date">
+                    <el-time-picker
+                      size='small'
+                      v-model="BusinessOpensAt"
+                      :picker-options="{
+                        selectableRange: '00:00:00 - 23:59:00'
+                      }">
+                    </el-time-picker>
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="input-group date" id="timepicker" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#timepicker">
-                    <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="far fa-clock"></i></div>
-                    </div>
+                  <div class="input-group date">
+                    <el-time-picker
+                      size='small'
+                      v-model="BusinessClosesAt"
+                      :picker-options="{
+                        selectableRange: '00:00:00 - 23:59:00'
+                      }">
+                    </el-time-picker>
                   </div>
                 </div>
               </div>
@@ -79,33 +88,39 @@
               </div>
               <div class="row">
                 <div class="col-6">
-                  <div class="input-group date" id="timepicker" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#timepicker">
-                    <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="far fa-clock"></i></div>
-                    </div>
+                  <div class="input-group date">
+                    <el-time-picker
+                      size='small'
+                      v-model="HappyHourStartAt"
+                      :picker-options="{
+                        selectableRange: '00:00:00 - 23:59:00'
+                      }"
+                      placeholder="任意时间点">
+                    </el-time-picker>
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="input-group date" id="timepicker" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#timepicker">
-                    <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="far fa-clock"></i></div>
-                    </div>
+                  <div class="input-group date">
+                    <el-time-picker
+                      size='small'
+                      v-model="HappyHourClosesAt"
+                      :picker-options="{
+                        selectableRange: '00:00:00 - 23:59:00'
+                      }"
+                      placeholder="任意时间点">
+                    </el-time-picker>
                   </div>
                 </div>
               </div>
             </div>
 
             <hr>
-
-
-
           </div>
 
         </div>
       </div>
 
+      <!-- Usage Settings -->
       <div class="col-md-3">
         <div class="card card-primary">
           <div class="card-header">
@@ -153,7 +168,7 @@
         </div>
       </div>
 
-
+      <!-- Feature Settings -->
       <div class="col-md-3">
         <div class="card card-primary">
           <div class="card-header">
@@ -162,103 +177,85 @@
           <div class="card-body">
 
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                <label class="custom-control-label" for="customSwitch3">auto-logout</label>
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="autoLogout"></el-switch>
+              <span class="text-bold pl-3">auto-logout</span>
             </div>
 
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3"> auto-add customer</label>
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="autoAddCustomer"></el-switch>
+              <span class="text-bold pl-3">auto-add customer</span>
             </div>
 
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">add user suggestion</label>
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="addUserSuggestion"></el-switch>
+              <span class="text-bold pl-3">add user suggestion</span>
             </div>
+
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">generate sales report</label>
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="generateSalesReport"></el-switch>
+              <span class="text-bold pl-3">generate sales report</span>
             </div>
+
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">receive promotional emails</label>
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="receivePromotional"></el-switch>
+              <span class="text-bold pl-3">receive promotional emails</span>
             </div>
+
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">phone notifications</label>
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="phoneNotifications"></el-switch>
+              <span class="text-bold pl-3">phone notifications</span>
             </div>
+
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">allow excel export/import</label>
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="allowExcelExport"></el-switch>
+              <span class="text-bold pl-3">allow excel export/import</span>
             </div>
+
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">enable pin login</label>
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="enablePiLogin"></el-switch>
+              <span class="text-bold pl-3">enable pin login</span>
             </div>
 
           </div>
         </div>
       </div>
 
-
+      <!-- Display Settings -->
       <div class="col-md-3">
         <div class="card card-primary">
           <div class="card-header">
             <h3 class="card-title">Display Settings</h3>
           </div>
           <div class="card-body">
+            
+            <div class="form-group">
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="multilanguage"></el-switch>
+              <span class="text-bold pl-3">multilanguage</span>
+            </div>
 
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">multilanguage</label>
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="excelExport"></el-switch>
+              <span class="text-bold pl-3">allow excel export/import</span>
             </div>
+
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">allow excel export/import</label>
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="splitscreenEnabled"></el-switch>
+              <span class="text-bold pl-3">splitscreen enabled</span>
             </div>
+
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">splitscreen enabled</label>
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="splitScreenCommercials"></el-switch>
+              <span class="text-bold pl-3">split screen commercials</span>
             </div>
+
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">split screen commercials</label>
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="splitScreenPayment"></el-switch>
+              <span class="text-bold pl-3">split screen payment</span>
             </div>
+
             <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">split screen payment</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="custom-control custom-switch custom-switch-on-success">
-                <input type="checkbox" class="custom-control-input" id="customSwitch3">
-                <label class="custom-control-label" for="customSwitch3">activate commercials</label>
-              </div>
+              <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="activateCommercials"></el-switch>
+              <span class="text-bold pl-3">activate commercials</span>
             </div>
 
           </div>
@@ -274,3 +271,68 @@
 </section>
 <!-- /.content -->
 </template>
+
+<script>
+export default {
+  data: () => ({
+    VenueSetting: '',
+    InterfaceTheme: '',
+    BusinessOpensAt: '',
+    BusinessClosesAt: '',
+    HappyHourStartAt: '',
+    HappyHourClosesAt: '',
+
+    //
+    autoLogout: false,
+    autoAddCustomer: false,
+    addUserSuggestion: false,
+    generateSalesReport: false,
+    receivePromotional: false,
+    phoneNotifications: false,
+    allowExcelExport: false,
+    enablePiLogin: false,
+    //
+    multilanguage: false,
+    excelExport: false,
+    splitscreenEnabled: false,
+    splitScreenCommercials: false,
+    splitScreenPayment: false,
+    activateCommercials: false,
+
+    VenueSettingOptions: [
+      {
+        label: 'The Hai',
+        value: 'The Hai'
+      },
+      {
+        label: 'Real Shanghai',
+        value: 'Real Shanghai'
+      }
+    ],
+
+    InterfaceThemeOptions: [
+      {
+        label: 'Default',
+        value: 'Default'
+      },
+      {
+        label: 'Desert',
+        value: 'Desert'
+      },
+      {
+        label: 'Forest',
+        value: 'Forest'
+      },
+      {
+        label: 'Spaceship',
+        value: 'Spaceship'
+      },
+      {
+        label: 'Vulcano',
+        value: 'Vulcano'
+      }
+    ],
+  })
+}
+</script>
+

@@ -9,7 +9,7 @@
                     <div class="p-2 flex-fill" style="overflow: hidden">
                     <img src="../assets/avatar.jpg" class="img-circle border-success img-fluid" alt="User Image">
                     <div class="text-center my-3">
-                        <h6>{{user.name}}</h6>
+                        <h6 class="text-cut">{{user.name}}</h6>
                     </div>
                     </div>
                 </div>
@@ -118,7 +118,7 @@ export default {
             CookieSet('POS_TOKEN', access_token, expires)
             // 设置请求时header
             ApiInit.setHeader()
-            this.$router.push("/")
+            this.$router.push("/bills")
             this.isShowLogin = false
         }
     }

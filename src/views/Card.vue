@@ -4,8 +4,8 @@
     <div class="container-fluid">
       <div class="row">
         <!-- single customer -->
-        <div class="col-3" v-for="item in billsList" :key='item.id'>
-          <div class="card">
+        <div class="col-3" v-for="(item,idx) in billsList" :key='item.id'>
+          <div class="card" @click="goBillsList(idx)">
             <div class="card-body p-0">
               <div class="d-md-flex">
                 <div class="p-1 flex-fill p-4" style="overflow: hidden">
@@ -73,8 +73,11 @@ export default {
 
   methods: {
     openBillsModal () {
-      console.log(123)
       this.setShowBillsModel(true)
+    },
+
+    goBillsList (idx) {
+      this.$router.push(`/bills?idx=${idx}`)
     },
 
     ...mapActions("bills", [
