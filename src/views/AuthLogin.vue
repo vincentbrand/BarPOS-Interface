@@ -30,7 +30,8 @@
 
                   <button :disabled='disabled' class="btn btn-lg btn-info btn-block text-uppercase font-weight-bold mb-2 login-btn" type="submit">
                     <b-spinner v-if="disabled" style="color: #fff" small label="Spinning"></b-spinner>
-                    {{$t('login.login')}}</button>
+                    {{$t('login.login')}}
+                  </button>
 
                   <!-- <div class="">
                     <router-link class="small a-ripple" to="/forgot">{{$t('login.forgot')}}</router-link>
@@ -69,6 +70,7 @@ export default {
   }),
   
   created () {
+    document.querySelector('body').setAttribute('style', ``)
   },
 
   methods: {
@@ -83,7 +85,6 @@ export default {
     goLogin () {
       this.disabled = true
       if (this.formData.username=='root@ripple.cn'&&this.formData.password=='123456') {
-
         setTimeout(() => {
           this.disabled = false
           this.$router.push('/login')
