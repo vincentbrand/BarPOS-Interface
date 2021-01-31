@@ -9,10 +9,23 @@ export function setBills ({ commit }) {
 }
 
 // 添加一个订单
-export function addBills ({ commit }, data) {
+export function addBills ({ commit }, params) {
+
   return new Promise((resolve) => {
-    commit("ADD_BILLS", data)
-    resolve()
+    Api.createBills({
+      venue_id: CookieGet("POS_VENUE_ID"),
+      customer_id: params.customer_id,
+      name: params.name,
+      status: params.status || 0,
+      products: params.products || 0,
+      total: params.total || 0,
+      employee_id: CookieGet("POS_USERID")
+    }).then(res => {
+      commit("ADD_BILLS", res.data)
+      resolve()
+    })
+    
+    
   })
 }
 
@@ -47,24 +60,14 @@ export function addBillsGoods ({ commit }, params) {
 
 // 获取所有的商品及分类
 export function setFoodCategory ({ commit }) {
-  Promise.all([
-    Api.getCategories(),
-    Api.getProducts()
-  ]).then((res) => {
-    let cts = res[0];
-    let prs = res[1].data;
-    // 将获取到的分类与产品对应
-    cts.forEach((ct) => {
-      if (!ct.goods) {
-        ct.goods = []
-      }
-      prs.forEach((pr) => {
-        if (ct.id === pr.category.id) {
-          ct.goods.push(pr)
-        }
+  Api.getCategories().then(res => {
+    let result = res.data
+    result.forEach((cate) => {
+      cate.products.forEach((pro) => {
+        pro.quantity = 1
       })
     })
-    commit("SET_FOOD_CATEGORY", cts)
+    commit("SET_FOOD_CATEGORY", result)
   })
 }
 
@@ -103,4 +106,10 @@ export function filterSystemUser ({ getters,commit }, name) {
     }
   })
   commit("SET_SYSTEM_USER", filterUser)
+}
+
+// 关闭订单
+export async function userCloseBills (_, id) {
+  const result = await Api.closeBills(id)
+  return result
 }

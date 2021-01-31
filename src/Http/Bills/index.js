@@ -17,10 +17,11 @@ export default {
         return response.data
     },
 
-    async getProducts () {
+    async createBills (data) {
         const response = await ApiService.request({
-            method: "GET",
-            url: '/products'
+            method: "POST",
+            url: '/bill/create',
+            data
         });
         return response.data
     },
@@ -38,6 +39,14 @@ export default {
             method: "POST",
             url: `/bill/item/add`,
             data
+        });
+        return response.data
+    },
+
+    async closeBills (id) {
+        const response = await ApiService.request({
+            method: "GET",
+            url: `/bill/close/${id}`
         });
         return response.data
     },

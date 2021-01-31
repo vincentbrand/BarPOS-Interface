@@ -109,7 +109,7 @@ export default {
         setHint () {
             let IXS = 1;
             this.billsList.forEach(item => {
-                if (item.nickname.includes("customer")) {
+                if (item.name.includes("customer")) {
                     IXS++;
                 }
             });
@@ -120,14 +120,13 @@ export default {
             if (this.name == '') {
                 let IXS = 1;
                 this.billsList.forEach(item => {
-                    if (item.nickname.includes("customer")) {
+                    if (item.name.includes("customer")) {
                         IXS++;
                     }
                 });
                 this.addBills({
-                    id: "customer" + IXS,
-                    nickname: "customer" + IXS,
-                    bills: []
+                    customer_id: 1,
+                    name: "customer" + IXS,
                 }).then(() =>{
                     this.setShowBillsModel(false)
                 })

@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <div class="row justify-content-center align-items-center" style="padding-top:20%;">
+    <div class="row justify-content-center align-items-center" style="padding-top:15%;">
         <!-- employee -->
         <div class="col-2" v-for="user in SystemAdmin" :key="user.id" @click="onLoginUser(user)">
             <div class="card">
@@ -9,7 +9,7 @@
                     <div class="p-2 flex-fill" style="overflow: hidden">
                     <img src="../assets/avatar.jpg" class="img-circle border-success img-fluid" alt="User Image">
                     <div class="text-center my-3">
-                        <h6>{{user.name}}</h6>
+                        <h6 class="text-cut">{{user.name}}</h6>
                     </div>
                     </div>
                 </div>
@@ -19,16 +19,33 @@
         <!-- END OF: employee -->
     </div>
 
+    <div class="fixed-venue">
+        <el-select v-model="venueId" placeholder="请选择" size="small">
+            <el-option
+            v-for="item in venues"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+            </el-option>
+        </el-select>
+    </div>
+
+    <div class="fixed-logout">
+        <button class="btn btn-danger rounded-circle" @click="logout">
+            <i class="far fa-stop-circle"></i>
+        </button>
+    </div>
+
     <el-dialog
-    :title="'Login User ' + nowLoginUser.name"
+    title="Login User"
     :visible.sync="isShowLogin"
     :custom-class='isShowAn?"animate__shakeX":"animate__"'
     width="20%"
     center>
-        <!-- <h5>+86-{{nowLoginUser.phone}}</h5> -->
         <form @submit.prevent='onSubmit' v-if="isShowLogin">
             <input v-focus type="password" v-model="password" class="i-input" maxlength="4">
         </form>
+        <h6 class="text-center mt-2 text-black text-cut">{{nowLoginUser.name}}</h6>
     </el-dialog>
 </div>
 
@@ -43,9 +60,11 @@ export default {
         isShowLogin: false,
         isShowAn: false,
         password: '',
+        venueId: null,
         bg: require("../assets/bg.jpg"),
 
         SystemAdmin: [],
+        venues: [],
 
         nowLoginUser: {}
     }),
@@ -55,6 +74,13 @@ export default {
             if (val.length === 4) {
                 this.onSubmit()
             }
+        },
+
+        venueId (val) {
+            CookieSet("POS_VENUE_ID", val)
+            Api.setEmployeesVenues(val).then(res => {
+                this.SystemAdmin = res.data
+            })
         }
     },
 
@@ -74,8 +100,12 @@ export default {
     },
 
     created () {
-        Api.getEmployeesLoginInfo().then(res => {
-            this.SystemAdmin = res.data
+        // Api.getEmployeesLoginInfo().then(res => {
+        //     this.SystemAdmin = res.data
+        // })
+        Api.setVenues().then(res => {
+            this.venues = res.data
+            this.venueId = res.data[0].id
         })
     },
 
@@ -118,14 +148,18 @@ export default {
             CookieSet('POS_TOKEN', access_token, expires)
             // 设置请求时header
             ApiInit.setHeader()
-            this.$router.push("/")
+            this.$router.push("/bills")
             this.isShowLogin = false
+        },
+
+        logout () {
+            this.$router.push("/auth/login")
         }
     }
 }
 </script>
 
-<style>
+<style lang='less'>
 .i-input{
     width: 100%;
     height: 60px;
@@ -156,6 +190,24 @@ export default {
 
 .animate__shakeX {
     animation: shakeX .5s;
+}
+
+.fixed-venue{
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 100px;
+}
+
+.fixed-logout{
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    .btn{
+        width: 45px;
+        height: 45px;
+        text-align: center;
+    }
 }
 
 </style>
