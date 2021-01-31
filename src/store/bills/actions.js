@@ -9,10 +9,23 @@ export function setBills ({ commit }) {
 }
 
 // 添加一个订单
-export function addBills ({ commit }, data) {
+export function addBills ({ commit }, params) {
+
   return new Promise((resolve) => {
-    commit("ADD_BILLS", data)
-    resolve()
+    Api.createBills({
+      venue_id: CookieGet("POS_VENUE_ID"),
+      customer_id: params.customer_id,
+      name: params.name,
+      status: params.status || 0,
+      products: params.products || 0,
+      total: params.total || 0,
+      employee_id: CookieGet("POS_USERID")
+    }).then(res => {
+      commit("ADD_BILLS", res.data)
+      resolve()
+    })
+    
+    
   })
 }
 

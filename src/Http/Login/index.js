@@ -17,4 +17,20 @@ export default {
         });
         return response.data
     },
+
+    async setVenues () {
+        const response = await ApiService.request({
+            method: "GET",
+            url: '/venue/compact'
+        });
+        return response.data
+    },
+
+    async setEmployeesVenues (id) {
+        const response = await ApiService.request({
+            method: "GET",
+            url: `/employees/venue/${id}`
+        });
+        return response.data
+    }
 }

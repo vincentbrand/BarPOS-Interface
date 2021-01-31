@@ -125,9 +125,8 @@ export default {
                     }
                 });
                 this.addBills({
-                    id: "customer" + IXS,
+                    customer_id: 1,
                     name: "customer" + IXS,
-                    bills: []
                 }).then(() =>{
                     this.setShowBillsModel(false)
                 })
