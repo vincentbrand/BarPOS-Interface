@@ -7,5 +7,13 @@ export default {
             url: '/notifications/unread'
         });
         return response.data
+    },
+
+    async getSidebarNav (lang) {
+        const response = await ApiService.request({
+            method: "GET",
+            url: `/nav/${lang}`
+        });
+        return response.data
     }
 }

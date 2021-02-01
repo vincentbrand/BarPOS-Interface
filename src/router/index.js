@@ -57,11 +57,39 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, _, next) => {
-  // console.log(from)
-  const nextRouter = [ '/login', '/auth/login' ]
-  if ( !nextRouter.includes(to.path) && !CookieGet("POS_TOKEN") )
-    next({ name: 'Login' })
-  else
-    next()
+  const nextRouter = [ '/auth/login' ]
+  const isSupervisorLogin = CookieGet("POS_SUPERVISOR") ? true : false
+  const isEmployeesLogin = CookieGet("POS_TOKEN") ? true : false
+  // 验证路由
+  if (nextRouter.includes(to.path) ) {
+    // 特定路由放行
+    if (isSupervisorLogin && isEmployeesLogin) {
+      next({ name: 'List' })
+    } else if (isSupervisorLogin && !isEmployeesLogin) {
+      next({ name: "Login" })
+    } else if (!isSupervisorLogin && !isEmployeesLogin) {
+      next()
+    }
+  } else {
+    // 其他路由验证
+    if (isSupervisorLogin) { // 主管已经登陆 -> 到员工登陆界面
+      console.log('主管已经登陆 -> 到员工登陆界面')
+      if ( !isEmployeesLogin && (to.path !== '/login') ) { // 员工没有登陆
+        console.log("员工没有登陆")
+        next({ name: 'Login' })
+      } else { // 员工已登陆
+        console.log("员工已登陆")
+        next()
+      }
+    } else { // 主管美有登陆 -> 主管去登陆
+      console.log('主管美有登陆 -> 主管去登陆')
+      next({ name: 'AuthLogin' })
+    }
+  }
+
+  // if ( !nextRouter.includes(to.path) && !CookieGet("POS_TOKEN") )
+  //   next({ name: 'Login' })
+  // else
+  //   next()
 })
 export default router

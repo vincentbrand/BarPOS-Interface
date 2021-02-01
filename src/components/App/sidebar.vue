@@ -173,12 +173,23 @@
 
 
 <script>
+import Api from '@/Http/App';
+import { get as CookieGet } from 'js-cookie';
 export default {
   data: () => ({
     user: {
       avatar: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=121352583,3553479540&fm=26&gp=0.jpg',
       name: 'Vince'
     }
-  })
+  }),
+
+  created () {
+    const lang = CookieGet("POS_LANGUAGE") || "en"
+    const isLogin = CookieGet("POS_TOKEN") ? true : false
+    if (!isLogin) return;
+    Api.getSidebarNav(lang).then(res => {
+      console.log(res)
+    })
+  }
 }
 </script>

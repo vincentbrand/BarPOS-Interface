@@ -32,5 +32,14 @@ export default {
             url: `/employees/venue/${id}`
         });
         return response.data
+    },
+
+    async setSupervisor (data) {
+        const response = await ApiService.request({
+            method: "POST",
+            url: `/supervisor/login`,
+            data
+        });
+        return response.data
     }
 }

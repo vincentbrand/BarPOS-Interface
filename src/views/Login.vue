@@ -54,7 +54,7 @@
 <script>
 import Api from '@/Http/Login/index';
 import ApiInit from '@/Http/index';
-import { set as CookieSet } from 'js-cookie';
+import { set as CookieSet, remove as CookieRemove } from 'js-cookie';
 export default {
     data: () => ({
         isShowLogin: false,
@@ -138,6 +138,7 @@ export default {
         setCookie (result) {
             const expires = {expires: 10/24}
             const { data, access_token } = result
+            // const { data } = result
             // 设置本地语言
             this.$i18n.locale = data.preferred_language;
             // 设置本地缓存
@@ -153,6 +154,7 @@ export default {
         },
 
         logout () {
+            CookieRemove("POS_SUPERVISOR")
             this.$router.push("/auth/login")
         }
     }

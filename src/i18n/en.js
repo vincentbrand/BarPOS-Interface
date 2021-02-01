@@ -1,6 +1,6 @@
 export const login = {
 	"msg": "Better service made easy",
-	"name": "Username",
+	"name": "Phone Number",
 	"password": "Password",
 	"remember": "Remember password",
 	"login": "SIGN IN",
