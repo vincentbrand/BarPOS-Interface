@@ -34,9 +34,9 @@ export default {
   },
 
   data: () => ({
-    timmer: null,
+    timer: null,
     isShowSidebar: false,
-    redirectTime: 150000, // (:s)秒
+    redirectTime: 15, // (:s)秒
     routerPath: ["/login", "/auth/login"]
   }),
 
@@ -48,13 +48,13 @@ export default {
     moveEvent() {
       let path = ["/login", "/auth/login"];
       if (!path.includes(this.$route.path)) {
-        clearTimeout(this.timmer);
+        clearTimeout(this.timer);
         this.init();
       }
     },
    
     init() {
-      this.timmer = setTimeout(() => {
+      this.timer = setTimeout(() => {
         CookieRemove("POS_USERPHONE")
         CookieRemove("POS_USERID")
         CookieRemove("POS_LANGUAGE")

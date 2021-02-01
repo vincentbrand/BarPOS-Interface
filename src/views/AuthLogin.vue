@@ -19,12 +19,13 @@
 
                 <form @submit.prevent="goLogin">
                   <div class="form-label-group">
-                    <input type="email" v-model="formData.username" id="inputEmail" class="form-control" :placeholder="$t('login.name')" required="" autofocus="">
+                    <input type="number" v-model="formData.phone" id="inputEmail" 
+                    class="form-control" :placeholder="$t('login.name')" required="" autofocus="">
                     <label for="inputEmail">{{$t('login.name')}}</label>
                   </div>
 
                   <div class="form-label-group">
-                    <input v-model="formData.password" type="password" id="inputPassword" class="form-control" :placeholder="$t('login.password')" required="">
+                    <input v-model="formData.pin" type="password" id="inputPassword" class="form-control" :placeholder="$t('login.password')" required="">
                     <label for="inputPassword">{{$t('login.password')}}</label>
                   </div>
 
@@ -56,14 +57,13 @@
 </template>
 
 <script>
-
+import Api from '@/Http/Login';
+import { set as CookieSet } from 'js-cookie';
 export default {
-  name: 'login',
   data: () => ({
     formData: {
-      username: '',
-      password: '',
-      text: ''
+      phone: '',
+      pin: ''
     },
     disabled: false,
     bgImg: require("../assets/img/login-bg.jpg")
@@ -84,16 +84,19 @@ export default {
     },
     goLogin () {
       this.disabled = true
-      if (this.formData.username=='root@ripple.cn'&&this.formData.password=='123456') {
-        setTimeout(() => {
-          this.disabled = false
-          this.$router.push('/login')
-        }, 3000)
-
-      } else {
+      Api.setEmployeesLogin(this.formData).then(res => {
         this.disabled = false
-      }
-
+        if (res.data.id) {
+          CookieSet("POS_SUPERVISOR", true)
+          // CookieSet("POS_TOKEN", res.access_token)
+          this.$router.push('/login')
+          this.$notify({ title: 'Login Successfuy', type: 'success' })
+        } else {
+          this.$notify({ title: 'Login Fail', type: 'error' })
+        }
+      }).catch(() => {
+        this.disabled = false
+      })
     }
   },
 }

@@ -1,6 +1,6 @@
 export const login = {
 	"msg": "更好的服务变得容易",
-	"name": "用户名",
+	"name": "手机号码",
 	"password": "密码",
 	"remember": "记住密码",
 	"login": "登入",
