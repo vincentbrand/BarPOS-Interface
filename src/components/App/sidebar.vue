@@ -25,11 +25,41 @@
       <!-- sidebar menu -->
       <nav class="mt-2">
         <ul data-widget="treeview" role="menu" data-accordion="false" class="nav nav-pills nav-sidebar flex-column">
+          <!-- 分组路由 -->
+          <li class="nav-item" v-for="key in sidebarKey" :key="key" v-if="sidebar[key].length">
+            <a href="javascript:;" class="nav-link">
+              <i :class="'nav-icon ' + sidebar[key][0].icon"></i>
+              <p>{{sidebar[key][0].title}} 
+                <i class="fas fa-angle-left right"></i>
+                <span class="badge badge-info right">{{sidebar[key].length - 1}}</span>
+              </p>
+            </a>
+            <!-- 分组下的路由 -->
+            <ul class="nav nav-treeview">
+              <li class="nav-item" v-for="(item,idx) in sidebar[key]" :key="item.id" v-if="idx !== 0">
+                <router-link class="nav-link pl-4" :to='item.url'>
+                  <i :class="'nav-icon ' + item.icon"></i>
+                  <p>{{item.title}}</p>
+                </router-link>
+              </li>
+            </ul>
+          </li>
+          <!-- 单路由 -->
+          <li class="nav-item" v-else>
+            <router-link class="nav-link" :to="sidebar[key].url">
+              <i :class="'nav-icon ' + sidebar[key].icon"></i>
+              <p>{{sidebar[key].title}}</p>
+            </router-link>
+          </li>
+
+          <!--
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>Bills <i class="fas fa-angle-left right"></i><span class="badge badge-info right">3</span></p>
             </a>
+
             <ul class="nav nav-treeview" >
               <li class="nav-item">
                 <a href="#" class="nav-link pl-4">
@@ -51,12 +81,14 @@
               </li>
             </ul>
           </li>
+
           <li class="nav-item">
             <router-link class="nav-link" to="/stats">
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>Statistics</p>
             </router-link>
           </li>
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-glass-martini-alt "></i>
@@ -75,6 +107,7 @@
               </li>
             </ul>
           </li>
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-plus-square"></i><p>Extras <i class="fas fa-angle-left right"></i></p>
@@ -92,6 +125,7 @@
               </li>
             </ul>
           </li>
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i><p>Features <i class="fas fa-angle-left right"></i></p>
@@ -124,6 +158,7 @@
               </li>
             </ul>
           </li>
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cogs"></i>
@@ -162,6 +197,7 @@
               </li>
             </ul>
           </li>
+          -->
         </ul>
       </nav>
 
@@ -180,7 +216,9 @@ export default {
     user: {
       avatar: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=121352583,3553479540&fm=26&gp=0.jpg',
       name: 'Vince'
-    }
+    },
+    sidebar: {},
+    sidebarKey: []
   }),
 
   created () {
@@ -188,7 +226,8 @@ export default {
     const isLogin = CookieGet("POS_TOKEN") ? true : false
     if (!isLogin) return;
     Api.getSidebarNav(lang).then(res => {
-      console.log(res)
+      this.sidebar = res
+      this.sidebarKey = Object.keys(res)
     })
   }
 }
