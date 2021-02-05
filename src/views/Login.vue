@@ -100,9 +100,6 @@ export default {
     },
 
     created () {
-        // Api.getEmployeesLoginInfo().then(res => {
-        //     this.SystemAdmin = res.data
-        // })
         Api.setVenues().then(res => {
             this.venues = res.data
             this.venueId = res.data[0].id
@@ -149,8 +146,8 @@ export default {
             CookieSet('POS_TOKEN', access_token, expires)
             // 设置请求时header
             ApiInit.setHeader()
-            this.$router.push("/bills")
             this.isShowLogin = false
+            this.$router.push("/bills")
         },
 
         logout () {

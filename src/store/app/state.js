@@ -1,5 +1,8 @@
 const state = {
-  notifications: []
+  notifications: [],
+  customer: [],
+  sidebar: {},
+  sidebarKey: []
 }
 
 export default state
