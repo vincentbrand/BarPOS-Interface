@@ -7,7 +7,7 @@
     width="60%">
         <div class="row">
             <div class="col-6">
-                <ul class="list-group">
+                <ul class="list-group" style="max-height: 470px; overflow: auto;">
                     <li class="list-group-item"
                     @click="addSysCustomerBills(item)"
                     v-for="item in customer" :key="item.id">
