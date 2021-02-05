@@ -36,7 +36,7 @@ export default {
   data: () => ({
     timer: null,
     isShowSidebar: false,
-    redirectTime: 15, // (:s)秒
+    redirectTime: 1500000, // (:s)秒
     routerPath: ["/login", "/auth/login"]
   }),
 

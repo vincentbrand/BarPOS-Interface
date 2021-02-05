@@ -9,27 +9,26 @@
             <div class="col-6">
                 <ul class="list-group">
                     <li class="list-group-item"
-                    @click="addCustomerBills(item)"
-                    v-for="(item,idx) in systemUser" :key="idx">
-                        {{item}}
+                    @click="addSysCustomerBills(item)"
+                    v-for="item in customer" :key="item.id">
+                        {{item.nickname}}
                     </li>
                 </ul>
-                </div>
-                <div class="col-6">
+            </div>
+
+            <div class="col-6">
                 <form>
                     <div class="form-group">
                     <label for="exampleInputEmail1">Bill Name</label>
                     <input type="text" class="form-control" :placeholder="hint" v-model="name" />
-                    <small id="emailHelp" class="form-text text-muted"
-                        >Please add descriptive text for customer.</small
-                    >
+                    <small id="emailHelp" class="form-text text-muted" >Please add descriptive text for customer.</small>
                     </div>
                 </form>
             </div>
         </div>
         <span slot="footer" class="dialog-footer">
             <button class="btn btn-secondary mr-2" @click="onChangeModal">Close</button>
-            <button class="btn btn-success" @click="createSystemUser">Create</button>
+            <button class="btn btn-success" @click="createCostomer">Create</button>
         </span>
     </el-dialog>
 
@@ -68,6 +67,10 @@ export default {
             'billsList': "getBillsList",
             'systemUser': "getSystemUser",
             'isShow': "getShowBillsModal"
+        }),
+
+        ...mapGetters("app", {
+            "customer": "getCustomer"
         })
     },
 
@@ -92,7 +95,7 @@ export default {
     },
 
     created () {
-        this.setSystemUser()
+        this.setCustomer()
         this.setHint()
     },
 
@@ -116,7 +119,7 @@ export default {
             this.hint = `Customer${IXS}`
         },
 
-        createSystemUser () {
+        createCostomer () {
             if (this.name == '') {
                 let IXS = 1;
                 this.billsList.forEach(item => {
@@ -125,7 +128,6 @@ export default {
                     }
                 });
                 this.addBills({
-                    customer_id: 1,
                     name: "customer" + IXS,
                 }).then(() =>{
                     this.setShowBillsModel(false)
@@ -137,27 +139,34 @@ export default {
 
         addCustomer () {
             this.addSystemUser(this.name).then(() => {
-                this.addCustomerBills(this.name)
+                this.addCustomerBills({
+                    name: this.name
+                })
             })
         },
 
-        addCustomerBills (name) {
-            this.addBills({
-                id: name,
-                nickname: name,
-                bills: []
-            }).then(() =>{
+        addCustomerBills (params) {
+            this.addBills(params).then(() =>{
                 this.isShowAddUser = false
                 this.setShowBillsModel(false)
             })
         },
 
+        addSysCustomerBills (item) {
+            this.addCustomerBills({
+                name: item.nickname,
+                customer_id: item.id
+            })
+        },
+
         ...mapActions("bills", [
-            "setSystemUser",
             "setShowBillsModel",
-            "filterSystemUser",
             "addBills",
             "addSystemUser"
+        ]),
+
+        ...mapActions("app", [
+            "setCustomer"
         ])
     }
 }
