@@ -1,17 +1,17 @@
 <template>
 <div id="app" @mousemove="moveEvent" @click="moveEvent">
 
-  <div v-if="routerPath.includes($route.path)" class="wrapper">
+  <div v-show="routerPath.includes($route.path)" class="wrapper">
     <router-view/>
   </div>
 
-  <div v-else class="wrapper">
+  <div v-show='!routerPath.includes($route.path)' class="wrapper">
     <AppNavbar />
     <AppSidebar />
     
     <div class="content-wrapper">
       <router-view/>
-      <BillsModel />
+      <BillsModel v-if="!routerPath.includes($route.path)" />
     </div>
     
     <AppFooter />

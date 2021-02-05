@@ -223,8 +223,8 @@ export default {
 
   created () {
     const lang = CookieGet("POS_LANGUAGE") || "en"
-    const isLogin = CookieGet("POS_TOKEN") ? true : false
-    if (!isLogin) return;
+    // const isLogin = CookieGet("POS_TOKEN") ? true : false
+    // if (!isLogin) return;
     Api.getSidebarNav(lang).then(res => {
       this.sidebar = res
       this.sidebarKey = Object.keys(res)
