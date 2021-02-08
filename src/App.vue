@@ -1,7 +1,7 @@
 <template>
 <div id="app" @mousemove="moveEvent" @click="moveEvent">
 
-  <div v-show="routerPath.includes($route.path)" class="wrapper">
+  <div v-if="routerPath.includes($route.path)" class="wrapper">
     <router-view/>
   </div>
 

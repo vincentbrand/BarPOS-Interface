@@ -16,7 +16,7 @@ const routes = [
     component: resolve => require(['@/views/Card'], resolve)
   },
   {
-    path: '/product',
+    path: '/products',
     name: 'Product',
     component: resolve => require(['@/views/Product'], resolve)
   },
@@ -41,7 +41,7 @@ const routes = [
     component: resolve => require(['@/views/Stats'], resolve)
   },
   {
-    path: '/setting',
+    path: '/settings',
     name: 'Setting',
     component: resolve => require(['@/views/Setting'], resolve)
   },
@@ -49,6 +49,11 @@ const routes = [
     path: '/venues',
     name: 'Venue',
     component: resolve => require(['@/views/Venue'], resolve)
+  },
+  {
+    path: '/venues/add',
+    name: 'AddVenue',
+    component: resolve => require(['@/views/AddVenue'], resolve)
   },
   {
     path: '/bills/setting',

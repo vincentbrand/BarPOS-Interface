@@ -6,8 +6,11 @@
     "serve": "vue-cli-service serve --open --mode development",
     "build": "vue-cli-service build --mode production",
     "build-dev": "vue-cli-service build --mode development",
+    "build-staging": "vue-cli-service build --mode staging",
+    "build-local": "vue-cli-service build --mode localhost",
     "lint": "vue-cli-service lint",
-    "local": "vue-cli-service serve --open --mode localhost"
+    "local": "vue-cli-service serve --open --mode localhost",
+    "staging": "vue-cli-service serve --open --mode staging"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -29,6 +32,7 @@
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
+    "compression-webpack-plugin": "^7.1.2",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "less": "^4.1.0",
