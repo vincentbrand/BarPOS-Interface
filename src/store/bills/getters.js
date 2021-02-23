@@ -13,3 +13,7 @@ export function getSystemUser (state) {
 export function getShowBillsModal (state) {
   return state.isShowBillsModal
 }
+
+export function getBillsDetails (state) {
+  return state.billsDetails
+}

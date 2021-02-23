@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/bills',
+    path: '/bills/:id',
     name: 'List',
     component: resolve => require(['@/views/List'], resolve)
   },
@@ -29,6 +29,11 @@ const routes = [
     path: '/auth/login',
     name: 'AuthLogin',
     component: resolve => require(['@/views/AuthLogin'], resolve)
+  },
+  {
+    path: '/forgot',
+    name: "Forgot",
+    component: resolve => require(['@/views/Forgot'], resolve)
   },
   {
     path: '/employees',
@@ -59,6 +64,11 @@ const routes = [
     path: '/bills/setting',
     name: 'BillsSetting',
     component: resolve => require(['@/views/BillsSetting'], resolve)
+  },
+  // 重定向
+  {
+    path: '/',
+    redirect: '/auth/login'
   }
 ]
 
@@ -66,6 +76,13 @@ const router = new VueRouter({
   mode: 'history',
   routes
 })
+
+// 路由拦截
+/**
+ * 对于为登陆系统的用户
+ * 进行拦截
+ * 提示登陆操作
+ */
 router.beforeEach((to, _, next) => {
   const nextRouter = [ '/auth/login' ]
   const isSupervisorLogin = CookieGet("POS_SUPERVISOR") ? true : false
@@ -102,4 +119,6 @@ router.beforeEach((to, _, next) => {
   // else
   //   next()
 })
+
+
 export default router

@@ -65,9 +65,9 @@
       </li>
       
       <li class="nav-item">
-        <button class="btn btn-warning mr-3 text-white" @click="toPage">
-          <i class="fas fa-th-large" v-if="$route.path == '/'"></i>
-          <i class="fas fa-th-list" v-else></i>
+        <button class="btn mr-3 text-white" :class="$route.path == '/card'?'btn-secondary':'btn-warning'" @click="toPage"
+        :disabled="$route.path == '/card'">
+          <i class="fas fa-th-large"></i>
         </button>
       </li>
 
@@ -94,8 +94,9 @@ export default {
   },
 
   created () {
-    if (this.ns.length === 0 && CookieGet("POS_TOKEN"))
-    this.setUserNotifications()
+    if (this.ns.length === 0 && CookieGet("POS_TOKEN")) {
+      this.setUserNotifications()
+    }
   },
 
   methods: {
@@ -113,8 +114,7 @@ export default {
     },
 
     toPage () {
-      const r = this.$route.path == '/bills'?'/card':'/bills'
-      this.$router.push(r)
+      this.$router.push('/card')
     },
 
     handleFullScreen () {

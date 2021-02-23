@@ -8,6 +8,13 @@ export function setBills ({ commit }) {
   })
 }
 
+// 获取订单详情
+export function setBillsDetails ({ commit }, id) {
+  Api.getBillsDetails(id).then((result) => {
+    commit("SET_BILLS_DETAILS", result.data)
+  })
+}
+
 // 添加一个订单
 export function addBills ({ commit }, params) {
   return new Promise((resolve) => {
@@ -50,10 +57,7 @@ export function addBillsGoods ({ commit }, params) {
       }
     ]
   }).then(res => {
-    commit("ADD_BILLS_GOODS", {
-      userIdx: params.userIdx,
-      items: res.data
-    })
+    commit("ADD_BILLS_GOODS", res.data)
   })
   
 }

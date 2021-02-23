@@ -2,23 +2,25 @@ export function SET_BILLS (state, result) {
   state.billsList = result
 }
 
+export function SET_BILLS_DETAILS (state, result) {
+  state.billsDetails = result
+}
+
 export function ADD_BILLS (state, result) {
   state.billsList.push(result)
 }
 
 export function REMOVE_BILLS_GOODS (state, result) {
-  let bs = state.billsList
-  let userIdx = result.userIdx
+  let bs = state.billsDetails
   let idx = result.idx
-  bs[userIdx].items.splice(idx, 1);
-  state.billsList = bs
+  bs.items.splice(idx, 1);
+  state.billsDetails = bs
 }
 
 export function ADD_BILLS_GOODS (state, result) {
-  let bs = state.billsList
-  let userIdx = result.userIdx
-  bs[userIdx].items = [...bs[userIdx].items, ...result.items]
-  state.billsList = bs
+  let bs = state.billsDetails
+  bs.items.push(result)
+  state.billsDetails = bs
 }
 
 export function SET_FOOD_CATEGORY (state, result) {
