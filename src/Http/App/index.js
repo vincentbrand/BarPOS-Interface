@@ -12,7 +12,7 @@ export default {
     async getSidebarNav (lang) {
         const response = await ApiService.request({
             method: "GET",
-            url: `/nav/${lang}`
+            url: `/lang/nav/${lang}`
         });
         return response.data
     },

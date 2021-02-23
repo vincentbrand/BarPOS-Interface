@@ -4,26 +4,19 @@
     <div class="container-fluid">
       <div class="row">
         <!-- single customer -->
-        <div class="col-3" v-for="item in billsList" :key='item.id'>
-          <div class="card" @click="goBillsList(item)">
+        <div class="col-2" v-for="item in billsList" :key='item.id'>
+          <div class="card d-card" @click="goBillsList(item)">
             <div class="card-body p-0">
-              <div class="d-md-flex">
-                <div class="p-1 flex-fill p-4" style="overflow: hidden">
-                  <div class="row">
-                    <div class="col-9">
-                      <h5 class="text-primary">{{item.name}}</h5>
-                    </div>
-                    <div class="col-2 text-right">
-                      <h5 class="text-primary">{{item.quantity}}</h5>
-                    </div>
-                  </div>
-                  <div class="text-center">
-                    <i class="fas fa-glass-martini-alt fa-5x text-primary"></i>
-                  </div>
-                  <div class="text-right mt-4">
-                    <span class="text-black">{{item.date}}, {{item.time}}</span>
-                  </div>
-                </div>
+              <div class="text-block text-center text-cut h4">{{item.name}}</div>
+                
+              <div class="text-center pt-3">
+                <i :class="item.items[0] ? item.items[0].product.category.icon : 'fas fa-glass-martini-alt '" 
+                class="fa-5x text-primary"></i>
+              </div>
+
+              <div class="mt-4 d-flex justify-content-between text-bold">
+                <span class="text-black">{{item.quantity}}</span>
+                <span class="text-black">{{item.time}}</span>
               </div>
             </div>
           </div>
@@ -31,8 +24,8 @@
         <!-- END OF: single customer -->
 
         <!-- single customer -->
-        <div class="col-3">
-          <div class="card" @click="openBillsModal">
+        <div class="col-2">
+          <div class="card d-card" @click="openBillsModal">
             <div class="card-body p-0">
               <div class="d-md-flex">
                 <div class="p-1 flex-fill text-center p-4">
@@ -88,3 +81,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.d-card{
+  width: 100%;
+  padding: 20px;
+}
+</style>

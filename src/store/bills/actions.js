@@ -44,20 +44,22 @@ export function removeBillsGoods ({ commit }, params) {
 }
 
 // 增加订单中的商品
-export function addBillsGoods ({ commit }, params) {
-  Api.addBillsItem({
-    bill_id: params.bill_id,
-    employee_id: CookieGet("POS_USERID"),
-    products: [
-      {
-        product_id: params.item.id,
-        price: params.price,
-        quantity: params.item.quantity || 1,
-        type: params.type
-      }
-    ]
-  }).then(res => {
-    commit("ADD_BILLS_GOODS", res.data)
+export function addBillsGoods (_, params) {
+  return new Promise (resolve => {
+    Api.addBillsItem({
+      bill_id: params.bill_id,
+      employee_id: CookieGet("POS_USERID"),
+      products: [
+        {
+          product_id: params.item.id,
+          price: params.price,
+          quantity: params.item.quantity || 1,
+          type: params.type
+        }
+      ]
+    }).then((result) => {
+      resolve(result)
+    })
   })
   
 }
