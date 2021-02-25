@@ -80,6 +80,7 @@ export default {
   
   created () {
     document.querySelector('body').setAttribute('style', ``)
+    
   },
 
   methods: {

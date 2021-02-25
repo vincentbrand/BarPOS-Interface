@@ -15,5 +15,5 @@ export default {
             url: '/lang/interface/zh'
         });
         return response.data
-    } 
+    }
 }

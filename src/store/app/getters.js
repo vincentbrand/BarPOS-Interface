@@ -13,3 +13,7 @@ export function getSidebar (state) {
 export function getSidebarKey (state) {
   return state.sidebarKey
 }
+
+export function getSettings (state) {
+  return state.settings
+}

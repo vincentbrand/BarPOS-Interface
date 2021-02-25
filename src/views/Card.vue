@@ -87,4 +87,9 @@ export default {
   width: 100%;
   padding: 20px;
 }
+.text-cut{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis
+}
 </style>

@@ -33,5 +33,13 @@ export default {
             params
         });
         return response.data
+    },
+
+    async getSystemSettings () {
+        const response = await ApiService.request({
+            method: "GET",
+            url: `/settings`
+        });
+        return response.data
     }
 }

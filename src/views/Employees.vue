@@ -19,14 +19,26 @@
 
       <!-- Default box -->
       <div class="card card-solid">
+        
         <div class="card-body pb-0" style="display: block;">
           <div class="row d-flex align-items-stretch">
-
-            <div class="col-12 mb-2 text-right">
-              <button class="btn btn-success btn-sm mr-2" @click="openBillsModal">
+            <!-- left -->
+            <div class="col-6">
+              <el-select v-model="venueId" placeholder="请选择" size="small">
+                <el-option
+                v-for="item in venues"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+                </el-option>
+              </el-select>
+            </div>
+            <!-- right -->
+            <div class="col-6 text-right">
+              <router-link tag="button" to="/employees/create" class="btn btn-success btn-sm mr-2" >
                 <i class="fas fa-plus-circle"></i>
                 <span class="">Add</span>
-              </button>
+              </router-link>
               <button class="btn btn-secondary btn-sm mr-2">
                 <i class="fas fa-file-import"></i>
                 <span class="">Import</span>
@@ -35,11 +47,12 @@
                 <i class="fas fa-file-export"></i>
                 <span class="">Export</span>
               </button>
+            </div>
+            <div class="col-12 mb-2">
               <hr>
             </div>
 
-
-            <div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch" v-for="item in 5" :key="item">
+            <div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch" v-for="item in employees" :key="item.id">
               <div class="card bg-light">
                 
                 <div class="card-body pt-0">
@@ -49,20 +62,20 @@
                     </div>
                     <div class="col-3 text-right">
                       <div class="employee-switch">
-                        <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="autoAddCustomer"></el-switch>
+                        <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35'></el-switch>
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>Dan</b></h2>
+                      <h2 class="lead"><b>{{item.name}}</b></h2>
                       <p class="text-muted text-sm"><b>Position: </b> Manager </p>
                       <ul class="ml-4 mb-0 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span>(+86)12212239852</li>
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span>{{item.phone}}</li>
                       </ul>
                     </div>
                     <div class="col-5 text-center">
-                      <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1091405991,859863778&fm=26&gp=0.jpg" alt="user-avatar" class="img-circle img-fluid">
+                      <img :src="bg" alt="user-avatar" class="img-circle img-fluid" style="width: 80px;height: 80px">
                     </div>
                   </div>
                 </div>
@@ -87,25 +100,17 @@
               </div>
             </div>
 
-
-
-            <div class="col-12 col-sm-4 col-md-3 d-flex" @click="openBillsModal">
-              <div class="card bg-light">
-                <div class="card-body">
+            <div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch" @click="toCreateEmployees">
+              <div class="card bg-light w-100 ">
+                <div class="card-body d-flex justify-content-center align-items-center">
                   <div class="row">
-                    <div class="col-12 text-center">
+                    <div class="col-12 text-center ">
                       <i class="fas fa-plus-circle fa-5x text-gray-dark"></i>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-
-
-
-
-
 
           </div>
         </div>
@@ -133,39 +138,40 @@
 </template>
 
 <script>
-import { mapGetters,mapActions } from 'vuex';
-import Api from '@/Http/Employees';
+import Api from '@/Http/Login/index';
+
 export default {
   data: () => ({
-    employees: []
+    bg: require("../assets/bg.jpg"),
+    employees: [],
+    venues: [],
+    venueId: null,
   }),
 
-  created () {
-    Api.getEmployees().then((res) => {
-      this.employees = res.data
-    })
+  watch: {
+    venueId (val) {
+      Api.setEmployeesVenues(val).then(res => {
+        this.employees = res.data
+      })
+    }
   },
 
-  computed: {
-    ...mapGetters("bills", {
-      "billsList": "getBillsList",
+  created () {
+    Api.setVenues().then(res => {
+      this.venues = res.data
+      this.venueId = res.data[0].id
     })
   },
 
   methods: {
-    openBillsModal() {
-      this.setShowBillsModel(true)
+
+    toCreateEmployees () {
+      this.$router.push("/employees/create")
     },
-    ...mapActions("bills", [
-      "setBills",
-      "setShowBillsModel"
-    ])
+
   }
 }
 </script>
 
 <style>
-.employee-switch{
-
-}
 </style>

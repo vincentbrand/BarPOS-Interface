@@ -30,3 +30,10 @@ export function setSidebarNav ({ commit }, lang) {
     })
   })
 }
+
+// 获取 系统设置
+export function setSystemSettings ({ commit }) {
+  Api.getSystemSettings().then(res => {
+    commit("SET_SYSTEM_SETTINGS", res.data)
+  })
+}

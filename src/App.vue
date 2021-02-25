@@ -25,6 +25,7 @@ import AppSidebar from '@/components/App/sidebar';
 import BillsModel from '@/components/Home/BillsNameModel';
 import { remove as CookieRemove } from 'js-cookie';
 import Api from '@/Http/Language';
+import { mapActions } from 'vuex';
 export default {
   components: {
     AppNavbar,
@@ -42,6 +43,7 @@ export default {
 
   created () {
     this.setApiI18n()
+    this.setSystemSettings()
   },
 
   methods: {
@@ -76,7 +78,11 @@ export default {
         const zh = this.$i18n.messages.zh
         this.$i18n.setLocaleMessage('zh', Object.assign(zh, { api: res }))
       })
-    }
+    },
+
+    ...mapActions("app", [
+      "setSystemSettings"
+    ])
   }
 }
 </script>
