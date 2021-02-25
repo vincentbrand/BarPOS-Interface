@@ -71,15 +71,15 @@
 
                     <button class="btn btn-info btn-sm mr-1">
                       <i class="fas fa-pencil-alt"></i>
-                      <span class="">Edit</span>
+                      <span class="d-none d-sm-none d-md-none d-lg-block float-right ml-1">Edit</span>
                     </button>
                     <button class="btn btn-danger btn-sm mr-1">
                       <i class="fas fa-trash"></i>
-                      <span class="">Delete</span>
+                      <span class="d-none d-sm-none d-md-none d-lg-block float-right ml-1">Delete</span>
                     </button>
                     <button class="btn btn-primary btn-sm">
                       <i class="fas fa-user"></i>
-                      <span class="">View</span>
+                      <span class="d-none d-sm-none d-md-none d-lg-block float-right ml-1">View</span>
                     </button>
 
                   </div>

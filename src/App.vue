@@ -96,4 +96,13 @@ export default {
   width: 42px !important;
   height: 42px !important;
 }
+
+.btn-primary{
+  background: #ccc !important;
+  border:1px solid #ccc!important;
+}
+.btn-secondary{
+  background: #333 !important;
+  border:1px solid #333!important;
+}
 </style>
