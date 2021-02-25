@@ -36,6 +36,11 @@ const routes = [
     component: resolve => require(['@/views/Forgot'], resolve)
   },
   {
+    path: '/swiper',
+    name: "Swiper",
+    component: resolve => require(['@/views/PreviewSwiper'], resolve)
+  },
+  {
     path: '/employees',
     name: 'Employees',
     component: resolve => require(['@/views/Employees'], resolve)
@@ -84,14 +89,14 @@ const router = new VueRouter({
  * 提示登陆操作
  */
 router.beforeEach((to, _, next) => {
-  const nextRouter = [ '/auth/login' ]
+  const nextRouter = [ '/auth/login', '/swiper', '/forgot' ]
   const isSupervisorLogin = CookieGet("POS_SUPERVISOR") ? true : false
   const isEmployeesLogin = CookieGet("POS_TOKEN") ? true : false
   // 验证路由
   if (nextRouter.includes(to.path) ) {
     // 特定路由放行
     if (isSupervisorLogin && isEmployeesLogin) {
-      next({ name: 'List' })
+      next({ name: 'Card' })
     } else if (isSupervisorLogin && !isEmployeesLogin) {
       next({ name: "Login" })
     } else if (!isSupervisorLogin && !isEmployeesLogin) {

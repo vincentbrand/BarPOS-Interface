@@ -25,7 +25,7 @@
                   </div>
 
                   <div class="form-label-group">
-                    <input v-model="formData.pin" type="password" id="inputPassword" class="form-control" :placeholder="$t('login.password')" required="">
+                    <input v-model="formData.password" type="password" id="inputPassword" class="form-control" :placeholder="$t('login.password')" required="">
                     <label for="inputPassword">{{$t('login.password')}}</label>
                   </div>
                   
@@ -71,7 +71,7 @@ export default {
   data: () => ({
     formData: {
       phone: '',
-      pin: ''
+      password: ''
     },
     disabled: false,
     // bgImg: require("../assets/img/login-bg.jpg"),
@@ -95,7 +95,7 @@ export default {
 
     goLogin () {
       this.disabled = true
-      Api.setEmployeesLogin(this.formData).then(res => {
+      Api.setSupervisor(this.formData).then(res => {
         this.disabled = false
         if (res.data.id) {
           CookieSet("POS_SUPERVISOR", true)

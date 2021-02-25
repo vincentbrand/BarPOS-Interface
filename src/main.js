@@ -8,7 +8,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import i18n from './i18n';
 import { get as CookieGet } from 'js-cookie'
 
-
 // Websocket
 // import * as socketApi from '../src/Websocket/socket'
 // Vue.prototype.socketApi = socketApi

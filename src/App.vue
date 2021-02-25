@@ -37,7 +37,7 @@ export default {
     timer: null,
     isShowSidebar: false,
     redirectTime: 1500000, // (:s)秒
-    routerPath: ["/login", "/auth/login", "/forgot"]
+    routerPath: ["/login", "/auth/login", "/forgot", "/swiper"]
   }),
 
   created () {

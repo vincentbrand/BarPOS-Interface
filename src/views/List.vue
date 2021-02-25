@@ -183,22 +183,22 @@
       :visible.sync="isShowPayCode"
       width="60%">
           <div class="row text-black mb-5">
-              <div class="col-3 text-center">
+              <div class="col-3 text-center" @click="closePayBills">
                 <h4>Cash</h4>
                 <div class="fas fa-coins fa-4x"></div>
               </div>
 
-              <div class="col-3 text-center">
-                <h4>Cash</h4>
+              <div class="col-3 text-center" @click="closePayBills">
+                <h4>Card</h4>
                 <div class="fas fa-money-check fa-4x"></div>
               </div>
 
-              <div class="col-3 text-center">
+              <div class="col-3 text-center" @click="closePayBills">
                 <h4>WeChat</h4>
                 <div class="fab fa-weixin fa-4x"></div>
               </div>
 
-              <div class="col-3 text-center">
+              <div class="col-3 text-center" @click="closePayBills">
                 <h4>Alipay</h4>
                 <div class="fab fa-alipay fa-4x"></div>
               </div>
@@ -222,7 +222,6 @@ export default {
 
   data: () => ({
     isShowPayCode: false,
-    isShowOtherPay: false,
     billsId: 0,
     categoryTabIdx: 0,
     emloyeeId: 0,
@@ -293,8 +292,9 @@ export default {
 
     closePayBills () {
       this.userCloseBills(this.closeOtherPayId).then(() => {
-        this.isShowOtherPay = false
-        this.setBillsDetails(this.billsId)
+        this.isShowPayCode = false
+        // this.setBillsDetails(this.billsId)
+        this.$router.go(-1)
       })
     },
 
