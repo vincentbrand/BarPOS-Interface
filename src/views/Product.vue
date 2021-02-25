@@ -59,13 +59,17 @@
               <el-table-column width="300">
                 <template slot="header">
                   <div class="text-right">
-                    <button class="btn btn-success btn-sm mr-1">
+                    <button class="btn btn-success btn-sm mr-2">
                       <i class="fas fa-plus-circle"></i>
                       <span class="">Add</span>
                     </button>
-                    <button class="btn btn-secondary btn-sm">
+                    <button class="btn btn-secondary btn-sm mr-2">
                       <i class="fas fa-file-import"></i>
                       <span class="">Import</span>
+                    </button>
+                    <button class="btn btn-primary btn-sm">
+                      <i class="fas fa-file-export"></i>
+                      <span class="">Export</span>
                     </button>
                   </div>
                 </template>
