@@ -4,38 +4,41 @@
     <div class="container-fluid">
       <div class="row">
         <!-- single customer -->
-        <div class="col-2" v-for="item in billsList" :key='item.id'>
+        <div class="slot" v-for="item in billsList" :key='item.id'>
           <div class="card d-card" @click="goBillsList(item)">
             <div class="card-body p-0">
-              <div class="text-block text-center text-cut h4">{{item.name}}</div>
-                
+              <div class="text-center h4">{{ item.name | truncate(12, '') }}</div>
+
               <div class="text-center pt-3">
-                <i :class="item.items[0] ? item.items[0].product.category.icon : 'fas fa-glass-martini-alt '" 
-                class="fa-5x text-primary"></i>
+                <i :class="item.items[0] ? item.items[0].product.category.icon : 'fas fa-glass-martini-alt '"
+                class="fa-3x text-primary"></i>
               </div>
 
               <div class="mt-4 d-flex justify-content-between text-bold">
-                <span class="text-black">{{item.quantity}}</span>
-                <span class="text-black">{{item.time}}</span>
+                <span v-if="display.time" class="time">{{item.time}}</span>
+                <span v-if="display.quantity" class="quantity">{{item.quantity}}</span>
+                <span v-if="display.total" class="total">{{item.total}}</span>
               </div>
             </div>
           </div>
         </div>
         <!-- END OF: single customer -->
 
-        <!-- single customer -->
-        <div class="col-2">
+        <!--
+        <div class="slot" v-for="index in slots" :key="index">
           <div class="card d-card" @click="openBillsModal">
             <div class="card-body p-0">
               <div class="d-md-flex">
                 <div class="p-1 flex-fill text-center p-4">
-                  <i class="fas fa-plus-circle fa-5x text-gray-dark mt-4 mb-4"></i>
+                  <i class="fas fa-plus-circle fa-4x text-gray my-2"></i>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- END OF: single customer -->
+        -->
+
+
       </div>
 
       <!-- /.row -->
@@ -49,12 +52,20 @@
 <script>
 import { mapGetters,mapActions } from 'vuex';
 export default {
-  data: () => ({
-  }),
+    data: () => ({
+      slots: 10,
+      // settings !!
+      display:{
+        time:true,
+        quantity:true,
+        total:true,
+      }
+    }),
 
   created () {
+
     if (this.billsList.length <= 0) {
-      this.setBills()
+      this.setBills();
     }
   },
 
@@ -87,4 +98,26 @@ export default {
   width: 100%;
   padding: 20px;
 }
+.h4{
+  font-weight: normal;
+  font-size: 1.1rem;
+}
+.slot{
+  width:200px;
+  margin:0 0 20px 20px;
+}
+.time{
+  font-weight: normal;
+}
+.quantity{
+  font-weight: normal;
+}
+.total{
+  font-weight: normal;
+}
+
+.card {
+  margin-bottom: 0rem;
+}
+
 </style>

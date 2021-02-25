@@ -57,12 +57,14 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      
+
+      <!--
       <li class="nav-item">
         <button class="btn btn-info mr-3" @click="openBills">
           <i class="fas fa-plus-circle"></i> New Bill
         </button>
       </li>
+      -->
       
       <li class="nav-item">
         <button class="btn mr-3 text-white" :class="$route.path == '/card'?'btn-secondary':'btn-warning'" @click="toPage"
