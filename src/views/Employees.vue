@@ -22,6 +22,7 @@
         
         <div class="card-body pb-0" style="display: block;">
           <div class="row d-flex align-items-stretch">
+<<<<<<< HEAD
             <!-- left -->
             <div class="col-6">
               <el-select v-model="venueId" placeholder="请选择" size="small">
@@ -40,6 +41,15 @@
                 <span class="">Add</span>
               </router-link>
               <button class="btn btn-secondary btn-sm mr-2">
+=======
+
+            <div class="col-12 mb-2 text-right">
+              <button class="btn btn-success btn-sm mr-2" @click="addVisible = true">
+                <i class="fas fa-plus-circle"></i>
+                <span class="">Add</span>
+              </button>
+              <button class="btn btn-secondary btn-sm mr-2" @click="importFile = true">
+>>>>>>> 289b4315d3abdf2cdbc8803b84ba39fe487f5259
                 <i class="fas fa-file-import"></i>
                 <span class="">Import</span>
               </button>
@@ -82,7 +92,7 @@
                 <div class="card-footer">
                   <div class="text-right">
 
-                    <button class="btn btn-info btn-sm mr-1">
+                    <button class="btn btn-info btn-sm mr-1" @click="addVisible = true">
                       <i class="fas fa-pencil-alt"></i>
                       <span class="d-none d-sm-none d-md-none d-lg-block float-right ml-1">Edit</span>
                     </button>
@@ -134,6 +144,89 @@
       <!-- /.card -->
 
     </section>
+
+
+      <!-- edit / add employees -->
+      <el-dialog
+          title="Add Employee"
+          :visible.sync="addVisible"
+          width="30%"
+          :before-close="handleClose">
+
+        <div class="row my-3">
+          <div class="col-6">
+            <el-input placeholder="Name" v-model="employee.name"></el-input>
+          </div>
+          <div class="col-6">
+            <el-select v-model="venue" placeholder="Select a Role">
+              <el-option
+                  v-for="item in venues"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+              </el-option>
+            </el-select>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-6">
+            <el-input placeholder="Name" v-model="employee.phone"></el-input>
+          </div>
+          <div class="col-6">
+            <el-select v-model="role" placeholder="Select a Venue">
+              <el-option
+                  v-for="item in roles"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+              </el-option>
+            </el-select>
+          </div>
+        </div>
+
+
+
+
+
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="addVisible = false">Cancel</el-button>
+          <el-button type="success" @click="addVisible = false">Save</el-button>
+        </span>
+      </el-dialog>
+      <!-- END OF: edit / add employees -->
+
+      <!-- edit / add employees -->
+      <el-dialog
+          title="Import from csv"
+          :visible.sync="importFile"
+          width="30%"
+          :before-close="handleClose"
+          class="text-center"
+          center>
+
+        <el-upload
+            class="upload-demo text-center"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :before-remove="beforeRemove"
+            multiple
+            :limit="3"
+            :on-exceed="handleExceed"
+            :file-list="fileList">
+          <el-button size="small" type="primary">Click to upload</el-button>
+          <div slot="tip" class="el-upload__tip mt-3">.csv files with a size less than 1500kb</div>
+        </el-upload>
+
+
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="addVisible = false">Cancel</el-button>
+          <el-button type="success" @click="addVisible = false">Import</el-button>
+        </span>
+      </el-dialog>
+      <!-- END OF: edit / add employees -->
+
+
     </div>
 </template>
 
@@ -142,10 +235,46 @@ import Api from '@/Http/Login/index';
 
 export default {
   data: () => ({
+<<<<<<< HEAD
     bg: require("../assets/bg.jpg"),
     employees: [],
     venues: [],
     venueId: null,
+=======
+    employees: [],
+    addVisible: false,
+    employee:{
+      name:'John',
+      phone:'',
+
+    },
+    roles: [{
+      value: 1,
+      label: 'Guest'
+    }, {
+      value: 2,
+      label: 'Staff'
+    }, {
+      value: 3,
+      label: 'Waiter'
+    }, {
+      value: 4,
+      label: 'Manager'
+    }, {
+      value: 5,
+      label: 'Supervisor'
+    }],
+    role: '',
+    venues: [{
+      value: 1,
+      label: 'The Hai'
+    }, {
+      value: 2,
+      label: 'Real Shanghai'
+    }],
+    venue: '',
+    importFile: false,
+>>>>>>> 289b4315d3abdf2cdbc8803b84ba39fe487f5259
   }),
 
   watch: {

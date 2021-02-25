@@ -25,7 +25,12 @@ import AppSidebar from '@/components/App/sidebar';
 import BillsModel from '@/components/Home/BillsNameModel';
 import { remove as CookieRemove } from 'js-cookie';
 import Api from '@/Http/Language';
+<<<<<<< HEAD
 import { mapActions } from 'vuex';
+=======
+
+
+>>>>>>> 289b4315d3abdf2cdbc8803b84ba39fe487f5259
 export default {
   components: {
     AppNavbar,
@@ -103,6 +108,16 @@ export default {
   height: 42px !important;
 }
 
+/*
+f9cd84 - light yellow
+eac632 - yellow green
+f4a81f - light orange
+e27f24 - dark orange
+a4906f - grey brown
+826851 - dark brown
+
+
+
 .btn-primary{
   background: #ccc !important;
   border:1px solid #ccc!important;
@@ -111,4 +126,6 @@ export default {
   background: #333 !important;
   border:1px solid #333!important;
 }
+
+*/
 </style>
