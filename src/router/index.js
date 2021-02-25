@@ -94,14 +94,15 @@ router.beforeEach((to, _, next) => {
   const isEmployeesLogin = CookieGet("POS_TOKEN") ? true : false
   // 验证路由
   if (nextRouter.includes(to.path) ) {
+    next()
     // 特定路由放行
-    if (isSupervisorLogin && isEmployeesLogin) {
-      next({ name: 'Card' })
-    } else if (isSupervisorLogin && !isEmployeesLogin) {
-      next({ name: "Login" })
-    } else if (!isSupervisorLogin && !isEmployeesLogin) {
-      next()
-    }
+    // if (isSupervisorLogin && isEmployeesLogin) {
+    //   next({ name: 'Card' })
+    // } else if (isSupervisorLogin && !isEmployeesLogin) {
+    //   next({ name: "Login" })
+    // } else if (!isSupervisorLogin && !isEmployeesLogin) {
+    //   next()
+    // }
   } else {
     // 其他路由验证
     if (isSupervisorLogin) { // 主管已经登陆 -> 到员工登陆界面
