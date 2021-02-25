@@ -98,13 +98,11 @@ export default {
   width: 100%;
   padding: 20px;
 }
-<<<<<<< HEAD
 .text-cut{
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis
 }
-=======
 .h4{
   font-weight: normal;
   font-size: 1.1rem;
@@ -127,5 +125,4 @@ export default {
   margin-bottom: 0rem;
 }
 
->>>>>>> 289b4315d3abdf2cdbc8803b84ba39fe487f5259
 </style>

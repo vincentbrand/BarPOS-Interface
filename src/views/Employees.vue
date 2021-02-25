@@ -22,7 +22,6 @@
         
         <div class="card-body pb-0" style="display: block;">
           <div class="row d-flex align-items-stretch">
-<<<<<<< HEAD
             <!-- left -->
             <div class="col-6">
               <el-select v-model="venueId" placeholder="请选择" size="small">
@@ -41,7 +40,6 @@
                 <span class="">Add</span>
               </router-link>
               <button class="btn btn-secondary btn-sm mr-2">
-=======
 
             <div class="col-12 mb-2 text-right">
               <button class="btn btn-success btn-sm mr-2" @click="addVisible = true">
@@ -49,7 +47,6 @@
                 <span class="">Add</span>
               </button>
               <button class="btn btn-secondary btn-sm mr-2" @click="importFile = true">
->>>>>>> 289b4315d3abdf2cdbc8803b84ba39fe487f5259
                 <i class="fas fa-file-import"></i>
                 <span class="">Import</span>
               </button>
@@ -235,46 +232,10 @@ import Api from '@/Http/Login/index';
 
 export default {
   data: () => ({
-<<<<<<< HEAD
     bg: require("../assets/bg.jpg"),
     employees: [],
     venues: [],
     venueId: null,
-=======
-    employees: [],
-    addVisible: false,
-    employee:{
-      name:'John',
-      phone:'',
-
-    },
-    roles: [{
-      value: 1,
-      label: 'Guest'
-    }, {
-      value: 2,
-      label: 'Staff'
-    }, {
-      value: 3,
-      label: 'Waiter'
-    }, {
-      value: 4,
-      label: 'Manager'
-    }, {
-      value: 5,
-      label: 'Supervisor'
-    }],
-    role: '',
-    venues: [{
-      value: 1,
-      label: 'The Hai'
-    }, {
-      value: 2,
-      label: 'Real Shanghai'
-    }],
-    venue: '',
-    importFile: false,
->>>>>>> 289b4315d3abdf2cdbc8803b84ba39fe487f5259
   }),
 
   watch: {
