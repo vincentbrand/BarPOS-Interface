@@ -15,7 +15,7 @@
                     <h1>BarPos</h1>
                     <!-- <img src="../assets/img/full-logo.png" class="img-fluid">  -->
                  </div>
-                 <h3 class="login-heading mb-4">{{$t('login.msg')}}</h3>
+                 <h3 class="login-heading mb-4 text-gray">{{$t('login.msg')}}</h3>
 
                 <form @submit.prevent="goLogin">
                   <div class="form-label-group">
@@ -25,18 +25,25 @@
                   </div>
 
                   <div class="form-label-group">
-                    <input v-model="formData.pin" type="password" id="inputPassword" class="form-control" :placeholder="$t('login.password')" required="">
+                    <input v-model="formData.password" type="password" id="inputPassword" class="form-control" :placeholder="$t('login.password')" required="">
                     <label for="inputPassword">{{$t('login.password')}}</label>
                   </div>
-
-                  <button :disabled='disabled' class="btn btn-lg btn-info btn-block text-uppercase font-weight-bold mb-2 login-btn" type="submit">
+                  
+                  <button :disabled='disabled' class="btn btn-lg btn-info btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" >
                     <b-spinner v-if="disabled" style="color: #fff" small label="Spinning"></b-spinner>
                     {{$t('login.login')}}
                   </button>
 
-                  <!-- <div class="">
-                    <router-link class="small a-ripple" to="/forgot">{{$t('login.forgot')}}</router-link>
-                  </div> -->
+                  <hr>
+
+                  <button class="btn btn-lg btn-info btn-block btn-login text-uppercase font-weight-bold mb-2" type="button" >
+                    {{$t('login.wechatlogin')}}
+                  </button>
+
+                  <hr>
+                  <div class="text-center">
+                    <router-link class="small text-info" to="/forgot">{{$t('login.forgot')}}</router-link>
+                  </div>
                 </form>
 
               </div>
@@ -58,15 +65,17 @@
 
 <script>
 import Api from '@/Http/Login';
+import Image from '@/image/index';
 import { set as CookieSet } from 'js-cookie';
 export default {
   data: () => ({
     formData: {
       phone: '',
-      pin: ''
+      password: ''
     },
     disabled: false,
-    bgImg: require("../assets/img/login-bg.jpg")
+    // bgImg: require("../assets/img/login-bg.jpg"),
+    bgImg: Image.authLoginBg
   }),
   
   created () {
@@ -76,15 +85,17 @@ export default {
   methods: {
     tabEN () {
       this.$i18n.locale = 'en'
-      this.$cookie.set('lang', 'en')
+      CookieSet('POS_LANGUAGE', 'en')
     },
+
     tabZH () {
       this.$i18n.locale = 'zh'
-      this.$cookie.set('lang', 'zh')
+      CookieSet('POS_LANGUAGE', 'zh')
     },
+
     goLogin () {
       this.disabled = true
-      Api.setEmployeesLogin(this.formData).then(res => {
+      Api.setSupervisor(this.formData).then(res => {
         this.disabled = false
         if (res.data.id) {
           CookieSet("POS_SUPERVISOR", true)

@@ -18,54 +18,63 @@
   <section class="content pl-3 pr-3">
       <!-- Default box -->
       <div class="card">
-          <div class="card-body p-0" style="display: block;">
-            <table class="table table-striped projects">
-              <thead>
-              <tr>
-                <th style="width: 15%">Name</th>
-                <th style="width: 15%">Category</th>
-                <th style="width: 15%">Prices</th>
-                <th style="width: 20%" class="text-center">Stock</th>
-                <th style="width: 5%" class="text-center">Status</th>
-                <th style="width: 30%" class="text-right">
+          <div class="card-body" style="display: block;">
 
-                  <button class="btn btn-success btn-sm mr-1">
-                    <i class="fas fa-plus-circle"></i>
-                    <span class="">Add</span>
-                  </button>
-                  <button class="btn btn-secondary btn-sm">
-                    <i class="fas fa-file-import"></i>
-                    <span class="">Import</span>
-                  </button>
-
-                </th>
-              </tr>
-              </thead>
-              <tbody>
-              <!-- one row -->
-                <tr v-for="item in products" :key="item.id">
-                  <td>
-                    {{item.name}}
-                  </td>
-                  <td>
-                    {{item.category.name}}
-                  </td>
-                  <td>
-                    {{item.price}},
-                    {{item.happyhour}},
-                    {{item.discount}}
-                  </td>
-                  <td class="project_progress">
+            <el-table :data="products" style="width: 100%">
+              <!-- name -->
+              <el-table-column prop="name" label="Name" sortable width="180">
+              </el-table-column>
+              <!-- Category -->
+              <el-table-column label="Category" sortable>
+                <template slot-scope="{ row }">
+                    {{row.category.name}}
+                </template>
+              </el-table-column>
+              <!-- Prices -->
+              <el-table-column label="Prices" sortable width="300">
+                <template slot-scope="{ row }">
+                    {{row.price}},
+                    {{row.happyhour}},
+                    {{row.discount}}
+                </template>
+              </el-table-column>
+              <!-- Stock -->
+              <el-table-column label="Stock">
+                <template>
                     <div class="progress progress-sm">
-                      <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
-                      </div>
+                      <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%"></div>
                     </div>
                     <small>57% Complete</small>
-                  </td>
-                  <td class="project-state">
+                </template>
+              </el-table-column>
+              <!-- Status -->
+              <el-table-column label="Status" width="150">
+                <template>
+                  <div class="w-100 padding-left">
                     <i class="fas fa-eye"></i>
-                  </td>
-                  <td class="project-actions text-right">
+                  </div>
+                </template>
+              </el-table-column>
+              <!-- Action -->
+              <el-table-column width="300">
+                <template slot="header">
+                  <div class="text-right">
+                    <button class="btn btn-success btn-sm mr-2">
+                      <i class="fas fa-plus-circle"></i>
+                      <span class="">Add</span>
+                    </button>
+                    <button class="btn btn-secondary btn-sm mr-2">
+                      <i class="fas fa-file-import"></i>
+                      <span class="">Import</span>
+                    </button>
+                    <button class="btn btn-primary btn-sm">
+                      <i class="fas fa-file-export"></i>
+                      <span class="">Export</span>
+                    </button>
+                  </div>
+                </template>
+                <template>
+                  <div class="text-right">
                     <button class="btn btn-primary btn-sm mr-1">
                       <i class="fas fa-folder"></i>
                       <span class="">View</span>
@@ -78,12 +87,10 @@
                       <i class="fas fa-trash"></i>
                       <span class="">Delete</span>
                     </button>
-                  </td>
-                </tr>
-              <!-- END OF: one row -->
-
-              </tbody>
-            </table>
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
           <!-- /.card-body -->
       </div>
@@ -102,7 +109,6 @@ export default {
     created () {
       Api.getProducts().then((res) => {
         this.products = res.data
-        console.log(res.data)
       })
     }
 }
@@ -110,6 +116,9 @@ export default {
 
 
 <style>
+.cell{
+  color: #333333 !important;
+}
 /*
 #cc8b86
 #f9eae1

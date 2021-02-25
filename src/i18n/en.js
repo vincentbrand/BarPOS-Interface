@@ -5,6 +5,7 @@ export const login = {
 	"remember": "Remember password",
 	"login": "SIGN IN",
 	"forgot": "Forgot password?",
+	"wechatlogin": "WeChat Login",
 	"forgotMsg": {
 		"hint": "Forgot Your Password?",
 		"start": "We get it, stuff happens. Just enter your email address below and we'll send you a link to reset your password!",

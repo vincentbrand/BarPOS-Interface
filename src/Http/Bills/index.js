@@ -50,4 +50,12 @@ export default {
         });
         return response.data
     },
+
+    async getBillsDetails (id) {
+        const response = await ApiService.request({
+            method: "GET",
+            url: `/bill/detail/${id}`
+        });
+        return response.data
+    },
 }

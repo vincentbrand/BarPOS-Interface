@@ -37,7 +37,7 @@ export default {
     async setSupervisor (data) {
         const response = await ApiService.request({
             method: "POST",
-            url: `/supervisor/login`,
+            url: `/employee/supervisor/login`,
             data
         });
         return response.data

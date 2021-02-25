@@ -8,24 +8,31 @@ export function setBills ({ commit }) {
   })
 }
 
+// 获取订单详情
+export function setBillsDetails ({ commit }, id) {
+  Api.getBillsDetails(id).then((result) => {
+    commit("SET_BILLS_DETAILS", result.data)
+  })
+}
+
 // 添加一个订单
 export function addBills ({ commit }, params) {
-
   return new Promise((resolve) => {
-    Api.createBills({
+    let data = {
       venue_id: CookieGet("POS_VENUE_ID"),
-      customer_id: params.customer_id,
       name: params.name,
       status: params.status || 0,
       products: params.products || 0,
       total: params.total || 0,
       employee_id: CookieGet("POS_USERID")
-    }).then(res => {
+    }
+    if (params.customer_id) {
+      data.id = params.customer_id
+    }
+    Api.createBills(data).then(res => {
       commit("ADD_BILLS", res.data)
       resolve()
     })
-    
-    
   })
 }
 
@@ -37,22 +44,21 @@ export function removeBillsGoods ({ commit }, params) {
 }
 
 // 增加订单中的商品
-export function addBillsGoods ({ commit }, params) {
-  Api.addBillsItem({
-    bill_id: params.bill_id,
-    employee_id: CookieGet("POS_USERID"),
-    products: [
-      {
-        product_id: params.item.id,
-        price: params.price,
-        quantity: params.item.quantity || 1,
-        type: params.type
-      }
-    ]
-  }).then(res => {
-    commit("ADD_BILLS_GOODS", {
-      userIdx: params.userIdx,
-      items: res.data
+export function addBillsGoods (_, params) {
+  return new Promise (resolve => {
+    Api.addBillsItem({
+      bill_id: params.bill_id,
+      employee_id: CookieGet("POS_USERID"),
+      products: [
+        {
+          product_id: params.item.id,
+          price: params.price,
+          quantity: params.item.quantity || 1,
+          type: params.type
+        }
+      ]
+    }).then((result) => {
+      resolve(result)
     })
   })
   

@@ -2,7 +2,8 @@ const state = {
   billsList: [],
   foodCategory: [],
   systemUser: [],
-  isShowBillsModal: false
+  isShowBillsModal: false,
+  billsDetails: {}
 }
 
 export default state

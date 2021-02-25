@@ -4,7 +4,8 @@
     <div class="container-fluid">
       <div class="row">
         <!-- user  -->
-        <div class="col-md-6" style="max-height: 600px;overflow:auto">
+        <!--
+        <div class="col-md-6">
           <el-collapse v-model="userIdx" accordion>
             <div class="card" v-for="(user, uIdx) in billsList" :key="'bills' + user.id"
             :class="uIdx===userIdx?'active':''">
@@ -51,6 +52,50 @@
               </div>
             </div>
           </el-collapse>
+        </div>
+        -->
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">{{billsDetails.name}}</h3>
+              <div class="float-right">
+                <i class="fas fa-search pr-3"></i>
+                <i class="fas fa-user-plus"></i>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="d-md-flex">
+                  <div class="p-1 flex-fill" style="overflow: hidden">
+                    <table class="table table-hover text-nowrap" id="mark">
+                      <tbody>
+                        <tr v-for="(item,index) in billsDetails.items" :key="item.id">
+                          <td>{{item.product.name}}</td>
+                          <td>¥ {{item.price}}</td>
+                          <td>{{item.quantity}}</td>
+                          <td>{{item.time}}</td>
+                          <td class="text-right">
+                            <button class="btn btn-info mr-2" @click="copyGoodsItem(index)">
+                              <i class="el-icon-refresh text-white"></i>
+                            </button>
+
+                            <button class="btn btn-danger" @click="deleteGoodsItem(index, item)">
+                              <i class="el-icon-delete text-white"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+            </div>
+
+            <div class="card-footer clearfix bg-white">
+              <button type="button" class="btn btn-info float-right" @click="isShowPayCode = true">
+                <i class="fas fa-yen-sign"></i> Pay
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- food -->
@@ -132,51 +177,38 @@
     </div>
     <!--/. container-fluid -->
 
-    <!-- 微信  支付宝 -->
+    <!-- 支付 -->
     <el-dialog
-    title="QR Payment"
-    :visible.sync="isShowPayCode"
-    width="60%">
-        <div class="row">
-            <div class="col-6 text-center">
-            <h4>WeChat</h4>
-            <img
-                :src="weChatQrCode"
-                class="img-fluid"
-            />
-            </div>
-            <div class="col-6 text-center">
-            <h4>Alipay</h4>
-            <img
-                :src="AlipayQrCode"
-                class="img-fluid"
-            />
-            </div>
-        </div>
+      title="Pay"
+      :visible.sync="isShowPayCode"
+      width="60%">
+          <div class="row text-black mb-5">
+              <div class="col-3 text-center" @click="closePayBills">
+                <h4>Cash</h4>
+                <div class="fas fa-coins fa-4x"></div>
+              </div>
 
-        <span slot="footer" class="dialog-footer">
-            <button class="btn btn-info" @click="isShowPayCode = false">Close</button>
-        </span>
+              <div class="col-3 text-center" @click="closePayBills">
+                <h4>Card</h4>
+                <div class="fas fa-money-check fa-4x"></div>
+              </div>
+
+              <div class="col-3 text-center" @click="closePayBills">
+                <h4>WeChat</h4>
+                <div class="fab fa-weixin fa-4x"></div>
+              </div>
+
+              <div class="col-3 text-center" @click="closePayBills">
+                <h4>Alipay</h4>
+                <div class="fab fa-alipay fa-4x"></div>
+              </div>
+              
+          </div>
+
+          <span slot="footer" class="dialog-footer">
+              <button class="btn btn-info" @click="isShowPayCode = false">Close</button>
+          </span>
     </el-dialog>
-
-    <!-- 其他支付方式 -->
-    <el-dialog
-    title="Method of Payment"
-    :visible.sync="isShowOtherPay"
-    width="30%">
-        <div class="row">
-            <div class="col-6 text-center">
-              <button class="btn btn-info" @click="closePayBills">
-                Cash Payments
-              </button>
-            </div>
-            <div class="col-6 text-center">
-              <button class="btn btn-info" @click="closePayBills">
-                Unionpay Pay
-              </button>
-            </div>
-        </div>
-  </el-dialog>
 
   </section>
   
@@ -190,13 +222,10 @@ export default {
 
   data: () => ({
     isShowPayCode: false,
-    isShowOtherPay: false,
-    userIdx: "",
+    billsId: 0,
     categoryTabIdx: 0,
     emloyeeId: 0,
     closeOtherPayId: 0,
-    weChatQrCode: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAABlBMVEX///8AAABVwtN+AAACjElEQVR4nO3dS47bQAwE0Jn7XzqrAAEit1hFGcYkj8s2P/V0AX997+rrd0U9X3/V5Kcy4Xae8LKHkDBKuJ0nvOwhJIwSHlYfqssafY5o4WmK8G6+CkQYLzxNEd7NV4EI44WnKcK7+SrQh4WT893Vw3h0K0tISEhISEhI+Jxw+RUICQkJCQkJf5bwAHvqJ0JCQkJCQsK9cFKROdo8uZVNEU6vEvZFeDdFOL1K2Bfh3dT3rpbm6KVMuJ0nfPClTLidJ3zwpUy4nSd88KVMuJ0nfPBlmXBb0eoJ47FkTxXhdXM3/pkivG7uxj9ThNfN3fhnivC6uRsvky0DTSI+1RyNExISEhISEl66Jp7Joqh5Ul2M06LlasK4CAknyQinewpeHeO0aLmaMK5SGEWcHIv2PMUgJIxyZOeTzYSE3U+Ed+eTzYR3Jw4bu6tdT/TtDuOEhISEhISEf05NYNHG5XhkHn0OQkJCQkJCwjD0af71wslL91OUh5CQkJCQkLBONtnTVZmekJCQkJCQ8Dnh4wsf/4jbQFER9kcJF4GiIuyPEi4CRUXYHy2F74s4yXEIfRjfUgkJCQkJCQlnFa2O0h/GlzGyIrxpJrweX8bIivCmmfB6fBkjK8Kb5jcKJ8cmOSYv0ZeavBzynNCEhISEhIT/sXCZY5n1jZsJCQkJCQkJ3/B/wFGg6Ho0lZ0nJCQkJCQknAmj9JOpSYzRFyckJCQkJCR8p7BLP7kefVbCF2OHq9HCqAhfNEeBCAl3RfiiOQr0jwgntby6PHpYSJgfWwbqjhISRseWgbqjhITRsWWg7mgp7OoQOsoxaS4TbucJL1+65jLhdp7w8qVrLhNu5wkvX7rmMuF2nvDypWvu6hdwJWEkXvHKCAAAAABJRU5ErkJggg==',
-    AlipayQrCode: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAABlBMVEX///8AAABVwtN+AAACjElEQVR4nO3dS47bQAwE0Jn7XzqrAAEit1hFGcYkj8s2P/V0AX997+rrd0U9X3/V5Kcy4Xae8LKHkDBKuJ0nvOwhJIwSHlYfqssafY5o4WmK8G6+CkQYLzxNEd7NV4EI44WnKcK7+SrQh4WT893Vw3h0K0tISEhISEhI+Jxw+RUICQkJCQkJf5bwAHvqJ0JCQkJCQsK9cFKROdo8uZVNEU6vEvZFeDdFOL1K2Bfh3dT3rpbm6KVMuJ0nfPClTLidJ3zwpUy4nSd88KVMuJ0nfPBlmXBb0eoJ47FkTxXhdXM3/pkivG7uxj9ThNfN3fhnivC6uRsvky0DTSI+1RyNExISEhISEl66Jp7Joqh5Ul2M06LlasK4CAknyQinewpeHeO0aLmaMK5SGEWcHIv2PMUgJIxyZOeTzYSE3U+Ed+eTzYR3Jw4bu6tdT/TtDuOEhISEhISEf05NYNHG5XhkHn0OQkJCQkJCwjD0af71wslL91OUh5CQkJCQkLBONtnTVZmekJCQkJCQ8Dnh4wsf/4jbQFER9kcJF4GiIuyPEi4CRUXYHy2F74s4yXEIfRjfUgkJCQkJCQlnFa2O0h/GlzGyIrxpJrweX8bIivCmmfB6fBkjK8Kb5jcKJ8cmOSYv0ZeavBzynNCEhISEhIT/sXCZY5n1jZsJCQkJCQkJ3/B/wFGg6Ho0lZ0nJCQkJCQknAmj9JOpSYzRFyckJCQkJCR8p7BLP7kefVbCF2OHq9HCqAhfNEeBCAl3RfiiOQr0jwgntby6PHpYSJgfWwbqjhISRseWgbqjhITRsWWg7mgp7OoQOsoxaS4TbucJL1+65jLhdp7w8qVrLhNu5wkvX7rmMuF2nvDypWvu6hdwJWEkXvHKCAAAAABJRU5ErkJggg==',
     customProduct: {
       id: null,
       price: "",
@@ -208,18 +237,16 @@ export default {
 
   computed: {
     ...mapGetters("bills", {
-      "billsList": "getBillsList",
-      "category": "getFoodCategory"
+      "category": "getFoodCategory",
+      "billsDetails": "getBillsDetails"
     })
   },
 
   created () {
-    const idx = this.$route.query.idx;
-    this.userIdx = idx ? parseInt(idx) : "";
+    this.billsId = this.$route.params.id;
+    this.userIdx = 0
     this.emloyeeId = CookieGet("POS_USERID")
-    // if (this.billsList.length <= 0) {
-      this.setBills()
-    // }
+    this.setBillsDetails(this.billsId)
     if (this.category.length <= 0) {
       this.setFoodCategory()
     }
@@ -228,7 +255,6 @@ export default {
   methods: {
     deleteGoodsItem(index, item) {
       this.removeBillsGoods({
-        userIdx: this.userIdx,
         idx: index,
         item,
         price: item.price
@@ -236,15 +262,9 @@ export default {
     },
 
     copyGoodsItem (idx) {
-      const item = this.billsList[this.userIdx].items[idx]
-      const bills = this.billsList[this.userIdx]
-      this.addBillsGoods({
-        userIdx: this.userIdx,
-        item: item,
-        bill_id: bills.id,
-        type: item.type,
-        price: item.price
-      })
+      const item = this.billsDetails.items[idx]
+      const bills = this.billsDetails
+      this.updateBillsGoods(item, bills.id, item.type, item.price)
     },
 
     onChangeUidx(idx) {
@@ -252,27 +272,13 @@ export default {
     },
 
     addUserGoods(item, key) {
-      if (this.userIdx === "") return;
-      const bills = this.billsList[this.userIdx]
-      this.addBillsGoods({
-        userIdx: this.userIdx,
-        item: item,
-        bill_id: bills.id,
-        price: item[key],
-        type: key
-      })
+      const bills = this.billsDetails
+      this.updateBillsGoods(item, bills.id, key, item[key])
     },
 
     addUserCustomGoods() {
-      if (this.userIdx === "") return;
-      const bills = this.billsList[this.userIdx]
-      this.addBillsGoods({
-        userIdx: this.userIdx,
-        item: this.customProduct,
-        bill_id: bills.id,
-        price: this.customProduct.price,
-        type: "custom"
-      })
+      const bills = this.billsDetails
+      this.updateBillsGoods(this.customProduct, bills.id, "custom", this.customProduct.price)
     },
 
     openQrCode () {
@@ -286,18 +292,26 @@ export default {
 
     closePayBills () {
       this.userCloseBills(this.closeOtherPayId).then(() => {
-        this.isShowOtherPay = false
-        this.userIdx = ""
-        this.setBills()
+        this.isShowPayCode = false
+        // this.setBillsDetails(this.billsId)
+        this.$router.go(-1)
+      })
+    },
+
+    updateBillsGoods (item, bill_id, type, price) {
+      this.addBillsGoods({
+        item, bill_id, price, type
+      }).then(() => {
+        this.setBillsDetails(this.billsId)
       })
     },
 
     ...mapActions("bills", [
-      "setBills",
       "setFoodCategory",
       "removeBillsGoods",
       "addBillsGoods",
-      "userCloseBills"
+      "userCloseBills",
+      "setBillsDetails"
     ])
   },
 };

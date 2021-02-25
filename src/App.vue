@@ -5,13 +5,13 @@
     <router-view/>
   </div>
 
-  <div v-else class="wrapper">
+  <div v-show='!routerPath.includes($route.path)' class="wrapper">
     <AppNavbar />
     <AppSidebar />
     
     <div class="content-wrapper">
       <router-view/>
-      <BillsModel />
+      <BillsModel v-if="!routerPath.includes($route.path)" />
     </div>
     
     <AppFooter />
@@ -25,6 +25,8 @@ import AppSidebar from '@/components/App/sidebar';
 import BillsModel from '@/components/Home/BillsNameModel';
 import { remove as CookieRemove } from 'js-cookie';
 import Api from '@/Http/Language';
+
+
 export default {
   components: {
     AppNavbar,
@@ -36,8 +38,8 @@ export default {
   data: () => ({
     timer: null,
     isShowSidebar: false,
-    redirectTime: 15, // (:s)秒
-    routerPath: ["/login", "/auth/login"]
+    redirectTime: 1500000, // (:s)秒
+    routerPath: ["/login", "/auth/login", "/forgot", "/swiper"]
   }),
 
   created () {
@@ -96,4 +98,25 @@ export default {
   width: 42px !important;
   height: 42px !important;
 }
+
+/*
+f9cd84 - light yellow
+eac632 - yellow green
+f4a81f - light orange
+e27f24 - dark orange
+a4906f - grey brown
+826851 - dark brown
+
+
+
+.btn-primary{
+  background: #ccc !important;
+  border:1px solid #ccc!important;
+}
+.btn-secondary{
+  background: #333 !important;
+  border:1px solid #333!important;
+}
+
+*/
 </style>

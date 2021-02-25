@@ -12,7 +12,25 @@ export default {
     async getSidebarNav (lang) {
         const response = await ApiService.request({
             method: "GET",
-            url: `/nav/${lang}`
+            url: `/lang/nav/${lang}`
+        });
+        return response.data
+    },
+
+    async createCustomer (data) {
+        const response = await ApiService.request({
+            method: "POST",
+            url: `/customer/create`,
+            data
+        });
+        return response.data
+    },
+
+    async getCustomer (params) {
+        const response = await ApiService.request({
+            method: "GET",
+            url: `/customer/all`,
+            params
         });
         return response.data
     }
