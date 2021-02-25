@@ -90,7 +90,7 @@
               </div>
             </div>
 
-            <div class="card-footer clearfix">
+            <div class="card-footer clearfix bg-white">
               <button type="button" class="btn btn-info float-right" @click="isShowPayCode = true">
                 <i class="fas fa-yen-sign"></i> Pay
               </button>
