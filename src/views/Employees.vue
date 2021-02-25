@@ -8,10 +8,7 @@
             <h1>Employees</h1>
           </div>
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-              <li class="breadcrumb-item active">Employees</li>
-            </ol>
+
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -22,16 +19,40 @@
 
       <!-- Default box -->
       <div class="card card-solid">
-        <div class="card-body pb-0">
+        <div class="card-body pb-0" style="display: block;">
           <div class="row d-flex align-items-stretch">
 
-            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch" v-for="item in 5" :key="item">
+            <div class="col-12 mb-2 text-right">
+              <button class="btn btn-success btn-sm mr-2" @click="openBillsModal">
+                <i class="fas fa-plus-circle"></i>
+                <span class="">Add</span>
+              </button>
+              <button class="btn btn-secondary btn-sm mr-2">
+                <i class="fas fa-file-import"></i>
+                <span class="">Import</span>
+              </button>
+              <button class="btn btn-primary btn-sm">
+                <i class="fas fa-file-export"></i>
+                <span class="">Export</span>
+              </button>
+              <hr>
+            </div>
+
+
+            <div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch" v-for="item in 5" :key="item">
               <div class="card bg-light">
                 
                 <div class="card-body pt-0">
-                    <div class="text-muted border-bottom-0 pt-2 pb-2">
-                        The Hai
+                  <div class="row">
+                    <div class="col-9">
+                      <div class="text-muted border-bottom-0 pt-2 pb-2">The Hai </div>
                     </div>
+                    <div class="col-3 text-right">
+                      <div class="employee-switch">
+                        <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35' v-model="autoAddCustomer"></el-switch>
+                      </div>
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="col-7">
                       <h2 class="lead"><b>Dan</b></h2>
@@ -47,16 +68,44 @@
                 </div>
                 <div class="card-footer">
                   <div class="text-right">
-                    <a href="#" class="btn btn-sm bg-teal mr-1">
-                      <i class="fas fa-comments"></i>
-                    </a>
-                    <a href="#" class="btn btn-sm btn-primary">
-                      <i class="fas fa-user"></i> View Profile
-                    </a>
+
+                    <button class="btn btn-info btn-sm mr-1">
+                      <i class="fas fa-pencil-alt"></i>
+                      <span class="">Edit</span>
+                    </button>
+                    <button class="btn btn-danger btn-sm mr-1">
+                      <i class="fas fa-trash"></i>
+                      <span class="">Delete</span>
+                    </button>
+                    <button class="btn btn-primary btn-sm">
+                      <i class="fas fa-user"></i>
+                      <span class="">View</span>
+                    </button>
+
                   </div>
                 </div>
               </div>
             </div>
+
+
+
+            <div class="col-12 col-sm-4 col-md-3 d-flex" @click="openBillsModal">
+              <div class="card bg-light">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12 text-center">
+                      <i class="fas fa-plus-circle fa-5x text-gray-dark"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
 
           </div>
         </div>
@@ -82,3 +131,41 @@
     </section>
     </div>
 </template>
+
+<script>
+import { mapGetters,mapActions } from 'vuex';
+import Api from '@/Http/Employees';
+export default {
+  data: () => ({
+    employees: []
+  }),
+
+  created () {
+    Api.getEmployees().then((res) => {
+      this.employees = res.data
+    })
+  },
+
+  computed: {
+    ...mapGetters("bills", {
+      "billsList": "getBillsList",
+    })
+  },
+
+  methods: {
+    openBillsModal() {
+      this.setShowBillsModel(true)
+    },
+    ...mapActions("bills", [
+      "setBills",
+      "setShowBillsModel"
+    ])
+  }
+}
+</script>
+
+<style>
+.employee-switch{
+
+}
+</style>
