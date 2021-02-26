@@ -99,13 +99,41 @@
         </div>
 
         <!-- food -->
-        <div class="col-md-6" style="max-height: 600px;overflow:auto">
+        <div class="col-md-6" >
           <div class="card card-primary card-outline card-tabs">
-            <el-tabs type="border-card">
+            <el-tabs :stretch="true" type="border-card">
 
-              <el-tab-pane :label="item.name" v-for="item in category" :key='item.id'>
-                <table class="table">
+              <el-tab-pane :label="item.name" v-for="item in category" :key='item.id' style="max-height: 600px;overflow:auto;">
+                <table class="table" >
                     <tbody>
+                      <tr v-for="goods in item.products" :key="'goods' + goods.id">
+                        <td>{{ goods.name }}</td>
+                        <td>
+                          <button class="btn btn-info" @click.stop="addUserGoods(goods, 'happyhour')">
+                             {{ goods.happyhour }}
+                          </button>
+                        </td>
+                        <td>
+                          <button class="btn btn-primary" @click.stop="addUserGoods(goods, 'price')">
+                             {{ goods.price }}
+                          </button>
+                        </td>
+
+                        <td>
+                          <button class="btn btn-secondary" @click.stop="addUserGoods(goods, 'discount')">
+                             {{ goods.discount }}
+                          </button>
+                        </td>
+                        
+                        <td>
+                          <el-input-number
+                          v-model="goods.quantity"
+                          controls-position="right"
+                          :min="1" :max="10"
+                          ></el-input-number>
+                        </td>
+                         
+                      </tr>
                       <tr v-for="goods in item.products" :key="'goods' + goods.id">
                         <td>{{ goods.name }}</td>
                         <td>
@@ -338,5 +366,11 @@ export default {
 .el-collapse{
   border-bottom: none;
   border-top: none;
+}
+.el-tabs__nav-scroll{
+  overflow: auto !important;
+}
+.el-tabs__nav-prev,.el-tabs__nav-next{
+  display: none !important;
 }
 </style>

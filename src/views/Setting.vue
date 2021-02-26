@@ -273,6 +273,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   data: () => ({
     VenueSetting: '',
@@ -332,7 +333,17 @@ export default {
         value: 'Vulcano'
       }
     ],
-  })
+  }),
+
+  computed: {
+    ...mapGetters("app", {
+      "settings": "getSettings"
+    })
+  },
+
+  created () {
+    console.log(this.settings)
+  }
 }
 </script>
 
