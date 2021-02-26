@@ -55,8 +55,8 @@
                 <hr>
               </div>
 
-              <div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch" v-for="item in employees" :key="item.id">
-                <div class="card bg-light">
+              <div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch mb-3" v-for="item in employees" :key="item.id">
+                <div class="card bg-light w-100">
                   
                   <div class="card-body pt-0">
                     <div class="row">
@@ -103,7 +103,7 @@
                 </div>
               </div>
 
-              <div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch" @click="addVisible = true">
+              <div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch mb-3" @click="addVisible = true">
                 <div class="card bg-light w-100 ">
                   <div class="card-body d-flex justify-content-center align-items-center">
                     <div class="row">
@@ -127,9 +127,9 @@
       <el-dialog
           title="Add Employee"
           :visible.sync="addVisible"
-          width="30%">
+          width="50%">
 
-        <div class="row my-3">
+        <!-- <div class="row my-3">
           <div class="col-6">
             <el-input placeholder="Name" v-model="employee.name"></el-input>
           </div>
@@ -158,10 +158,36 @@
               </el-option>
             </el-select>
           </div>
-        </div>
+        </div> -->
+        <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="Name（English）" label-width='auto'>
+                <el-input v-model="form.name.en"></el-input>
+            </el-form-item>
+
+            <el-form-item label="Name（中文）" label-width='auto'>
+                <el-input v-model="form.name.zh"></el-input>
+            </el-form-item>
+
+            <el-form-item label="Language" label-width='auto'>
+                <el-select v-model="form.preferred_language" class="w-100" placeholder="Select Language">
+                    <el-option label="English" value="en"></el-option>
+                    <el-option label="中文" value="zh"></el-option>
+                </el-select>
+            </el-form-item>
+            
+            <el-form-item label="Phone" label-width='auto'>
+                <el-input v-model="form.phone"></el-input>
+            </el-form-item>
+
+            <el-form-item label="Password" label-width='auto'>
+                <el-input type="password" :max-length='4' v-model="form.pin"></el-input>
+            </el-form-item>
+
+        </el-form>
+
         <span slot="footer" class="dialog-footer">
           <el-button @click="addVisible = false">Cancel</el-button>
-          <el-button type="success" @click="addVisible = false">Save</el-button>
+          <el-button type="primary" @click="onSubmit">Save</el-button>
         </span>
       </el-dialog>
       <!-- END OF: edit / add employees -->
@@ -202,7 +228,7 @@
 
 <script>
 import Api from '@/Http/Login/index';
-
+import EmployeesApi from '@/Http/Employees';
 export default {
   data: () => ({
     bg: require("../assets/bg.jpg"),
@@ -235,13 +261,17 @@ export default {
     ],
     role: '',
     venue: '',
+    form: {
+        preferred_language: 'en',
+        phone: '',
+        pin: '',
+        name: { en: '', zh: '' }
+    }
   }),
 
   watch: {
     venueId (val) {
-      Api.setEmployeesVenues(val).then(res => {
-        this.employees = res.data
-      })
+      this.setEmployeesData(val)
     }
   },
 
@@ -253,7 +283,26 @@ export default {
   },
 
   methods: {
+    onSubmit () {
+      EmployeesApi.setCreateEmployees(this.form).then(res => {
+        if (res.data.id) {
+          this.setEmployeesData(this.venueId)
+          this.addVisible = false
+          this.form= {
+            preferred_language: 'en',
+            phone: '',
+            pin: '',
+            name: { en: '', zh: '' }
+          }
+        }
+      })
+    },
 
+    setEmployeesData (Id) {
+      Api.setEmployeesVenues(Id).then(res => {
+        this.employees = res.data
+      })
+    }
   }
 }
 </script>
