@@ -33,110 +33,90 @@
                 </el-option>
               </el-select>
             </div>
-            <!-- right -->
-            <div class="col-6 text-right">
-              <router-link tag="button" to="/employees/create" class="btn btn-success btn-sm mr-2" >
-                <i class="fas fa-plus-circle"></i>
-                <span class="">Add</span>
-              </router-link>
-              <button class="btn btn-secondary btn-sm mr-2">
+              <!-- right -->
+              <div class="col-6 text-right">
+                <div class="col-12 mb-2 text-right">
+                  <button class="btn btn-success btn-sm mr-2" @click="addVisible = true">
+                    <i class="fas fa-plus-circle"></i>
+                    <span class="">Add</span>
+                  </button>
+                  <button class="btn btn-secondary btn-sm mr-2" @click="importFile = true">
+                    <i class="fas fa-file-import"></i>
+                    <span class="">Import</span>
+                  </button>
+                  <button class="btn btn-primary btn-sm">
+                    <i class="fas fa-file-export"></i>
+                    <span class="">Export</span>
+                  </button>
+                </div>
+              </div>
 
-            <div class="col-12 mb-2 text-right">
-              <button class="btn btn-success btn-sm mr-2" @click="addVisible = true">
-                <i class="fas fa-plus-circle"></i>
-                <span class="">Add</span>
-              </button>
-              <button class="btn btn-secondary btn-sm mr-2" @click="importFile = true">
-                <i class="fas fa-file-import"></i>
-                <span class="">Import</span>
-              </button>
-              <button class="btn btn-primary btn-sm">
-                <i class="fas fa-file-export"></i>
-                <span class="">Export</span>
-              </button>
-            </div>
-            <div class="col-12 mb-2">
-              <hr>
-            </div>
+              <div class="col-12 mb-2">
+                <hr>
+              </div>
 
-            <div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch" v-for="item in employees" :key="item.id">
-              <div class="card bg-light">
-                
-                <div class="card-body pt-0">
-                  <div class="row">
-                    <div class="col-9">
-                      <div class="text-muted border-bottom-0 pt-2 pb-2">The Hai </div>
+              <div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch" v-for="item in employees" :key="item.id">
+                <div class="card bg-light">
+                  
+                  <div class="card-body pt-0">
+                    <div class="row">
+                      <div class="col-9">
+                        <div class="text-muted border-bottom-0 pt-2 pb-2">The Hai </div>
+                      </div>
+                      <div class="col-3 text-right">
+                        <div class="employee-switch">
+                          <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35'></el-switch>
+                        </div>
+                      </div>
                     </div>
-                    <div class="col-3 text-right">
-                      <div class="employee-switch">
-                        <el-switch active-color="#13ce66" inactive-color="#ff4949" :width='35'></el-switch>
+                    <div class="row">
+                      <div class="col-7">
+                        <h2 class="lead"><b>{{item.name}}</b></h2>
+                        <p class="text-muted text-sm"><b>Position: </b> Manager </p>
+                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                          <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span>{{item.phone}}</li>
+                        </ul>
+                      </div>
+                      <div class="col-5 text-center">
+                        <img src="../assets/avatar.jpg" alt="user-avatar" class="img-circle img-fluid" style="width: 80px;height: 80px">
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-7">
-                      <h2 class="lead"><b>{{item.name}}</b></h2>
-                      <p class="text-muted text-sm"><b>Position: </b> Manager </p>
-                      <ul class="ml-4 mb-0 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span>{{item.phone}}</li>
-                      </ul>
-                    </div>
-                    <div class="col-5 text-center">
-                      <img :src="bg" alt="user-avatar" class="img-circle img-fluid" style="width: 80px;height: 80px">
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer">
-                  <div class="text-right">
+                  <div class="card-footer">
+                    <div class="text-right">
 
-                    <button class="btn btn-info btn-sm mr-1" @click="addVisible = true">
-                      <i class="fas fa-pencil-alt"></i>
-                      <span class="d-none d-sm-none d-md-none d-lg-block float-right ml-1">Edit</span>
-                    </button>
-                    <button class="btn btn-danger btn-sm mr-1">
-                      <i class="fas fa-trash"></i>
-                      <span class="d-none d-sm-none d-md-none d-lg-block float-right ml-1">Delete</span>
-                    </button>
-                    <button class="btn btn-primary btn-sm">
-                      <i class="fas fa-user"></i>
-                      <span class="d-none d-sm-none d-md-none d-lg-block float-right ml-1">View</span>
-                    </button>
+                      <button class="btn btn-info btn-sm mr-1" @click="addVisible = true">
+                        <i class="fas fa-pencil-alt"></i>
+                        <span class="d-none d-sm-none d-md-none d-lg-block float-right ml-1">Edit</span>
+                      </button>
+                      <button class="btn btn-danger btn-sm mr-1">
+                        <i class="fas fa-trash"></i>
+                        <span class="d-none d-sm-none d-md-none d-lg-block float-right ml-1">Delete</span>
+                      </button>
+                      <button class="btn btn-primary btn-sm">
+                        <i class="fas fa-user"></i>
+                        <span class="d-none d-sm-none d-md-none d-lg-block float-right ml-1">View</span>
+                      </button>
 
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch" @click="toCreateEmployees">
-              <div class="card bg-light w-100 ">
-                <div class="card-body d-flex justify-content-center align-items-center">
-                  <div class="row">
-                    <div class="col-12 text-center ">
-                      <i class="fas fa-plus-circle fa-5x text-gray-dark"></i>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-          </div>
+              <div class="col-12 col-sm-4 col-md-3 d-flex align-items-stretch" @click="addVisible = true">
+                <div class="card bg-light w-100 ">
+                  <div class="card-body d-flex justify-content-center align-items-center">
+                    <div class="row">
+                      <div class="col-12 text-center ">
+                        <i class="fas fa-plus-circle fa-5x text-gray-dark"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
         </div>
-        <!-- /.card-body -->
-        <!-- <div class="card-footer">
-          <nav aria-label="Contacts Page Navigation">
-            <ul class="pagination justify-content-center m-0">
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">5</a></li>
-              <li class="page-item"><a class="page-link" href="#">6</a></li>
-              <li class="page-item"><a class="page-link" href="#">7</a></li>
-              <li class="page-item"><a class="page-link" href="#">8</a></li>
-            </ul>
-          </nav>
-        </div> -->
-        <!-- /.card-footer -->
+        
+      </div>
       </div>
       <!-- /.card -->
 
@@ -147,22 +127,21 @@
       <el-dialog
           title="Add Employee"
           :visible.sync="addVisible"
-          width="30%"
-          :before-close="handleClose">
+          width="30%">
 
         <div class="row my-3">
           <div class="col-6">
             <el-input placeholder="Name" v-model="employee.name"></el-input>
           </div>
           <div class="col-6">
-            <el-select v-model="venue" placeholder="Select a Role">
-              <el-option
-                  v-for="item in venues"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-              </el-option>
-            </el-select>
+              <el-select v-model="venue" placeholder="Select a Venue">
+                <el-option
+                v-for="item in venues"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+                </el-option>
+              </el-select>
           </div>
         </div>
         <div class="row my-3">
@@ -170,7 +149,7 @@
             <el-input placeholder="Name" v-model="employee.phone"></el-input>
           </div>
           <div class="col-6">
-            <el-select v-model="role" placeholder="Select a Venue">
+            <el-select v-model="role" placeholder="Select a Role">
               <el-option
                   v-for="item in roles"
                   :key="item.value"
@@ -180,11 +159,6 @@
             </el-select>
           </div>
         </div>
-
-
-
-
-
         <span slot="footer" class="dialog-footer">
           <el-button @click="addVisible = false">Cancel</el-button>
           <el-button type="success" @click="addVisible = false">Save</el-button>
@@ -197,7 +171,6 @@
           title="Import from csv"
           :visible.sync="importFile"
           width="30%"
-          :before-close="handleClose"
           class="text-center"
           center>
 
@@ -236,6 +209,32 @@ export default {
     employees: [],
     venues: [],
     venueId: null,
+    addVisible: false,
+    importFile: false,
+    employee: {
+      name: '',
+      phone: ''
+    },
+    roles: [
+      {
+        value: 1,
+        label: 'Guest'
+      }, {
+        value: 2,
+        label: 'Staff'
+      }, {
+        value: 3,
+        label: 'Waiter'
+      }, {
+        value: 4,
+        label: 'Manager'
+      }, {
+        value: 5,
+        label: 'Supervisor'
+      }
+    ],
+    role: '',
+    venue: '',
   }),
 
   watch: {
@@ -254,10 +253,6 @@ export default {
   },
 
   methods: {
-
-    toCreateEmployees () {
-      this.$router.push("/employees/create")
-    },
 
   }
 }

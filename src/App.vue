@@ -25,12 +25,7 @@ import AppSidebar from '@/components/App/sidebar';
 import BillsModel from '@/components/Home/BillsNameModel';
 import { remove as CookieRemove } from 'js-cookie';
 import Api from '@/Http/Language';
-<<<<<<< HEAD
 import { mapActions } from 'vuex';
-=======
-
-
->>>>>>> 289b4315d3abdf2cdbc8803b84ba39fe487f5259
 export default {
   components: {
     AppNavbar,
