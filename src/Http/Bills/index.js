@@ -58,4 +58,31 @@ export default {
         });
         return response.data
     },
+
+    async getCustomerFavorites (params) {
+        const response = await ApiService.request({
+            method: "GET",
+            url: `/customer/favorites`,
+            params
+        });
+        return response.data
+    },
+
+    async createCustomer (data) {
+        const response = await ApiService.request({
+            method: "POST",
+            url: `/customer/quickadd`,
+            data
+        });
+        return response.data
+    },
+
+    async addBillsCustomer (data) {
+        const response = await ApiService.request({
+            method: "POST",
+            url: `/bill/setcustomer`,
+            data
+        });
+        return response.data
+    }
 }
