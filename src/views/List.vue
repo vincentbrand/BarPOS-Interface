@@ -60,7 +60,7 @@
               <h3 class="card-title">{{billsDetails.name}}</h3>
               <div class="float-right">
                 <i class="fas fa-search pr-3"></i>
-                <i class="fas fa-user-plus"></i>
+                <i class="fas fa-user-plus" @click="addSysCustomer"></i>
               </div>
             </div>
 
@@ -274,13 +274,23 @@ export default {
     this.billsId = this.$route.params.id;
     this.userIdx = 0
     this.emloyeeId = CookieGet("POS_USERID")
-    this.setBillsDetails(this.billsId)
+    this.initBillsDetails()
+    
+
+    
     if (this.category.length <= 0) {
       this.setFoodCategory()
     }
   },
 
   methods: {
+    initBillsDetails () {
+      this.setBillsDetails(this.billsId).then(res => {
+        const data = res.coutomer ? { coutomer_id: res.coutomer.id } : {}
+        this.setCustomerFavorites(data)
+      })
+    },
+
     deleteGoodsItem(index, item) {
       this.removeBillsGoods({
         idx: index,
@@ -319,7 +329,7 @@ export default {
     },
 
     closePayBills () {
-      this.userCloseBills(this.closeOtherPayId).then(() => {
+      this.userCloseBills(this.billsDetails.id).then(() => {
         this.isShowPayCode = false
         // this.setBillsDetails(this.billsId)
         this.$router.go(-1)
@@ -334,12 +344,18 @@ export default {
       })
     },
 
+    addSysCustomer () {
+      this.addCustomer({ "nickname": this.billsDetails.name, bill_id: this.billsDetails.id })
+    },
+
     ...mapActions("bills", [
       "setFoodCategory",
       "removeBillsGoods",
       "addBillsGoods",
       "userCloseBills",
-      "setBillsDetails"
+      "setBillsDetails",
+      "setCustomerFavorites",
+      "addCustomer"
     ])
   },
 };

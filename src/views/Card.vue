@@ -63,10 +63,7 @@ export default {
     }),
 
   created () {
-
-    if (this.billsList.length <= 0) {
-      this.setBills();
-    }
+    this.setBills();
   },
 
   computed: {

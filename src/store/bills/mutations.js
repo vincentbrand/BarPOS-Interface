@@ -38,3 +38,7 @@ export function SET_SHOW_BILLS (state, result) {
 export function ADD_SYSTEM_USER (state, result) {
   state.systemUser.push(result)
 }
+
+export function SET_CUSTOMER_FAVORITES (state, result) {
+  state.foodCategory.unshift(result)
+}

@@ -10,8 +10,11 @@ export function setBills ({ commit }) {
 
 // 获取订单详情
 export function setBillsDetails ({ commit }, id) {
-  Api.getBillsDetails(id).then((result) => {
-    commit("SET_BILLS_DETAILS", result.data)
+  return new Promise(resolve => {
+    Api.getBillsDetails(id).then((result) => {
+      commit("SET_BILLS_DETAILS", result.data)
+      resolve(result.data)
+    })
   })
 }
 
@@ -77,6 +80,17 @@ export function setFoodCategory ({ commit }) {
   })
 }
 
+// 获取当前客户的收藏夹
+export function setCustomerFavorites ({ commit }, data) {
+  Api.getCustomerFavorites(data).then((res) => {
+    let result = res.data
+    result.products.forEach((pro) => {
+      pro.quantity = 1
+    })
+    commit("SET_CUSTOMER_FAVORITES", result)
+  })
+}
+
 // 获取所有保存的客户
 export function setSystemUser ({ commit }) {
   const userList = [
@@ -90,10 +104,17 @@ export function setSystemUser ({ commit }) {
 }
 
 // 添加一个客户到系统
-export function addSystemUser ({ commit }, name) {
+export function addCustomer ({ commit }, data) {
   return new Promise((resolve) => {
-    commit("ADD_SYSTEM_USER", name)
-    resolve()
+    Api.createCustomer({ nickname: data.nickname }).then((res) => {
+      Api.addBillsCustomer({ bill_id: data.bill_id, costumer_id: res.id })
+      .then(result => {
+        resolve(result)
+        Api.getBillsDetails(data.bill_id).then((resultB) => {
+          commit("SET_BILLS_DETAILS", resultB.data)
+        })
+      })
+    })
   })
 }
 
