@@ -109,7 +109,7 @@ export function setSystemUser ({ commit }) {
 export function addCustomer ({ commit }, data) {
   return new Promise((resolve) => {
     Api.createCustomer({ nickname: data.nickname }).then((res) => {
-      Api.addBillsCustomer({ bill_id: data.bill_id, costumer_id: res.id })
+      Api.addBillsCustomer({ bill_id: data.bill_id, customer_id: res.id })
       .then(result => {
         resolve(result)
         Api.getBillsDetails(data.bill_id).then((resultB) => {

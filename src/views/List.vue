@@ -60,7 +60,7 @@
               <h3 class="card-title">{{billsDetails.name}}</h3>
               <div class="float-right">
                 <i class="fas fa-search pr-3"></i>
-                <i class="fas fa-user-plus" @click="addSysCustomer"></i>
+                <i class="fas fa-user-plus" @click="addSysCustomer" v-if="!billsDetails.customer"></i>
               </div>
             </div>
 
