@@ -41,6 +41,16 @@ const routes = [
     component: resolve => require(['@/views/PreviewSwiper'], resolve)
   },
   {
+    path: '/slider',
+    name: "Slider",
+    component: resolve => require(['@/views/Slider'], resolve)
+  },
+  {
+    path: '/features',
+    name: "Features",
+    component: resolve => require(['@/views/Features'], resolve)
+  },
+  {
     path: '/employees',
     name: 'Employees',
     component: resolve => require(['@/views/Employees'], resolve)
