@@ -147,7 +147,7 @@ export default {
             // 设置请求时header
             ApiInit.setHeader()
             this.isShowLogin = false
-            this.$router.push("/card")
+            this.$router.push("/bills")
         },
 
         logout () {

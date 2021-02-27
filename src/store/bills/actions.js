@@ -20,6 +20,7 @@ export function setBillsDetails ({ commit }, id) {
 
 // 添加一个订单
 export function addBills ({ commit }, params) {
+  console.log(params)
   return new Promise((resolve) => {
     let data = {
       venue_id: CookieGet("POS_VENUE_ID"),
@@ -27,7 +28,8 @@ export function addBills ({ commit }, params) {
       status: params.status || 0,
       products: params.products || 0,
       total: params.total || 0,
-      employee_id: CookieGet("POS_USERID")
+      employee_id: CookieGet("POS_USERID"),
+      slot: Number(CookieGet("POS_SLOT"))
     }
     if (params.customer_id) {
       data.id = params.customer_id
