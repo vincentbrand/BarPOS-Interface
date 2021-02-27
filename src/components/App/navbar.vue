@@ -67,8 +67,8 @@
       -->
       
       <li class="nav-item">
-        <button class="btn mr-3 text-white" :class="$route.path == '/card'?'btn-secondary':'btn-warning'" @click="toPage"
-        :disabled="$route.path == '/card'">
+        <button class="btn mr-3 text-white" :class="$route.path == '/bills'?'btn-secondary':'btn-warning'" @click="toPage"
+        :disabled="$route.path == '/bills'">
           <i class="fas fa-th-large"></i>
         </button>
       </li>
@@ -116,7 +116,7 @@ export default {
     },
 
     toPage () {
-      this.$router.push('/card')
+      this.$router.push('/bills')
     },
 
     handleFullScreen () {

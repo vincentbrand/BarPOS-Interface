@@ -1,5 +1,10 @@
+import { get as CookieGet } from 'js-cookie';
 export function SET_BILLS (state, result) {
-  state.billsList = result
+  const slots = Number(CookieGet("POS_BILLS_SLOTS"))
+  state.billsList = Array.apply(null, Array(slots))
+  result.forEach(item => {
+    state.billsList[item.slot] = item
+  })
 }
 
 export function SET_BILLS_DETAILS (state, result) {
@@ -7,7 +12,7 @@ export function SET_BILLS_DETAILS (state, result) {
 }
 
 export function ADD_BILLS (state, result) {
-  state.billsList.push(result)
+  state.billsList.splice(result.slot, 1, result)
 }
 
 export function REMOVE_BILLS_GOODS (state, result) {

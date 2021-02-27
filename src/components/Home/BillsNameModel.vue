@@ -81,13 +81,13 @@ export default {
     }),
 
     watch: {
-        name (newVal) {
-            if (newVal == '') {
-                this.setSystemUser()
-            } else {
-                this.filterSystemUser(newVal)
-            }
-        },
+        // name (newVal) {
+        //     if (newVal == '') {
+        //         this.setSystemUser()
+        //     } else {
+        //         this.filterSystemUser(newVal)
+        //     }
+        // },
 
         isShow () {
             this.setHint()
@@ -112,8 +112,10 @@ export default {
         setHint () {
             let IXS = 1;
             this.billsList.forEach(item => {
-                if (item.name.includes("customer")) {
-                    IXS++;
+                if (item) {
+                    if (item.name.includes("customer")) {
+                        IXS++;
+                    }
                 }
             });
             this.hint = `Customer${IXS}`
@@ -123,8 +125,10 @@ export default {
             if (this.name == '') {
                 let IXS = 1;
                 this.billsList.forEach(item => {
-                    if (item.name.includes("customer")) {
-                        IXS++;
+                    if (item) {
+                        if (item.name.includes("customer")) {
+                            IXS++;
+                        }
                     }
                 });
                 this.addBills({

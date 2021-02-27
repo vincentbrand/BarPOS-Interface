@@ -23,7 +23,7 @@ import AppNavbar from '@/components/App/navbar';
 import AppFooter from '@/components/App/footer';
 import AppSidebar from '@/components/App/sidebar';
 import BillsModel from '@/components/Home/BillsNameModel';
-import { remove as CookieRemove } from 'js-cookie';
+import { remove as CookieRemove, set as CookieSet } from 'js-cookie';
 import Api from '@/Http/Language';
 import { mapActions } from 'vuex';
 export default {
@@ -35,6 +35,7 @@ export default {
   },
 
   data: () => ({
+    slots: 20,
     timer: null,
     isShowSidebar: false,
     redirectTime: 1500000, // (:s)秒
@@ -42,6 +43,7 @@ export default {
   }),
 
   created () {
+    CookieSet("POS_BILLS_SLOTS", this.slots)
     this.setApiI18n()
     this.setSystemSettings()
   },
